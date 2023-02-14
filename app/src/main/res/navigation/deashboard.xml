@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/deashboard"
+    app:startDestination="@id/deashBoard">
+
+    <fragment
+        android:id="@+id/deashBoard"
+        android:name="com.example.myapp.Fragments.DeashBoard"
+        android:label="fragment_deash_board"
+        tools:layout="@layout/fragment_deash_board" >
+        <action
+            android:id="@+id/action_deashBoard_to_profile2"
+            app:destination="@id/profile2" />
+        <action
+            android:id="@+id/action_deashBoard_to_searchFragment22"
+            app:destination="@id/searchFragment2" />
+        <action
+            android:id="@+id/action_deashBoard_to_addRecipeFragment2"
+            app:destination="@id/addRecipeFragment2" />
+        <action
+            android:id="@+id/action_deashBoard_to_recipeFragment"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_deashBoard_to_userPosted"
+            app:destination="@id/userPosted" />
+        <action
+            android:id="@+id/action_deashBoard_to_recipeHistory"
+            app:destination="@id/recipeHistory" />
+    </fragment>
+    <fragment
+        android:id="@+id/profile2"
+        android:name="com.example.myapp.Fragments.Profile"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profile2_to_loginFragment2"
+            app:destination="@id/loginFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchFragment2"
+        android:name="com.example.myapp.Fragments.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" >
+        <argument
+            android:name="SearchIngredients"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/addRecipeFragment2"
+        android:name="com.example.myapp.Fragments.AddRecipeFragment"
+        android:label="fragment_add_recipe"
+        tools:layout="@layout/fragment_add_recipe" />
+    <fragment
+        android:id="@+id/recipeFragment"
+        android:name="com.example.myapp.Fragments.RecipeFragment"
+        android:label="fragment_recipe"
+        tools:layout="@layout/fragment_recipe" >
+        <action
+            android:id="@+id/action_recipeFragment_to_deashBoard"
+            app:destination="@id/deashBoard" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginFragment2"
+        android:name="com.example.myapp.Fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
+    <activity
+        android:id="@+id/userPosted"
+        android:name="com.example.myapp.UserPosted"
+        android:label="activity_user_posted2"
+        tools:layout="@layout/activity_user_posted2" />
+    <fragment
+        android:id="@+id/recipeHistory"
+        android:name="com.example.myapp.Fragments.RecipeHistory"
+        android:label="fragment_recipe_history"
+        tools:layout="@layout/fragment_recipe_history" />
+</navigation>

@@ -1,0 +1,34 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.MyApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/ColorPrimary</item>
+        <item name="colorPrimaryVariant">@color/ColorPrimary</item>
+        <item name="colorOnPrimary">@color/ColorAccent</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/ColorPrimary</item>
+        <item name="colorSecondaryVariant">@color/ColorPrimary</item>
+        <item name="colorOnSecondary">@color/ColorAccent</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+    </style>
+    <style name="CornerCut" parent="">
+
+        <item name="cornerSizeTopLeft">15%</item>
+        <item name="cornerSizeTopRight">15%</item>
+    </style>
+    <style name="NoActionBarAndNoStatusBar">
+      <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:fitsSystemWindows">true</item>
+    </style>
+    <style name="Theme.MyApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.MyApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.MyApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+</resources>

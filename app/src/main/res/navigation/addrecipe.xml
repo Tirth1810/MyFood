@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/addrecipe"
+    app:startDestination="@id/personalDetailsFragment">
+
+    <fragment
+        android:id="@+id/personalDetailsFragment"
+        android:name="com.example.myapp.Fragments.PersonalDetailsFragment"
+        android:label="fragment_personal_details"
+        tools:layout="@layout/fragment_personal_details" >
+        <action
+            android:id="@+id/action_personalDetailsFragment_to_recipeDetalsFragment"
+            app:destination="@id/recipeDetalsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeDetalsFragment"
+        android:name="com.example.myapp.Fragments.RecipeDetalsFragment"
+        android:label="fragment_recipe_detals"
+        tools:layout="@layout/fragment_recipe_detals" >
+        <action
+            android:id="@+id/action_recipeDetalsFragment_to_recipeImageFragment"
+            app:destination="@id/recipeImageFragment" />
+        <action
+            android:id="@+id/action_recipeDetalsFragment_to_personalDetailsFragment"
+            app:destination="@id/personalDetailsFragment" />
+        <argument
+            android:name="Name"
+            app:argType="string" />
+        <argument
+            android:name="Email"
+            app:argType="string" />
+        <argument
+            android:name="Profesion"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeImageFragment"
+        android:name="com.example.myapp.Fragments.RecipeImageFragment"
+        android:label="fragment_recipe_image"
+        tools:layout="@layout/fragment_recipe_image" >
+        <action
+            android:id="@+id/action_recipeImageFragment_to_recipeDetalsFragment"
+            app:destination="@id/recipeDetalsFragment" />
+        <argument
+            android:name="RecipeName"
+            app:argType="string" />
+        <argument
+            android:name="RecipeIng"
+            app:argType="string" />
+        <argument
+            android:name="RecipeDesc"
+            app:argType="string" />
+        <argument
+            android:name="RecipeTime"
+            app:argType="string" />
+        <argument
+            android:name="PersonalName"
+            app:argType="string" />
+        <argument
+            android:name="Email"
+            app:argType="string" />
+        <argument
+            android:name="Profesion"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_recipeImageFragment_to_personalDetailsFragment"
+            app:destination="@id/personalDetailsFragment" />
+    </fragment>
+</navigation>

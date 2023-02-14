@@ -1,0 +1,30 @@
+package com.example.myapp.Fragments
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.navArgs
+import com.example.myapp.R
+import kotlinx.android.synthetic.main.activity_recipe_based_on_ingridients.*
+
+
+class RecipeShowFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        val view= inflater.inflate(R.layout.fragment_recipe_show, container, false)
+
+        return view
+
+    }
+
+
+}
