@@ -16,7 +16,6 @@ class Histroy_Recipes : AppCompatActivity() {
         val data: String = intent.getStringExtra("Data").toString()
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
         history.add(History(data))
-
         history_rv.layoutManager=LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false)
         history_rv.adapter=HistoryAdapter(history)
 
