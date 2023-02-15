@@ -1,6 +1,7 @@
 package com.example.myapp.Adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
@@ -15,6 +16,7 @@ import com.example.myapp.R
 import com.google.android.material.checkbox.MaterialCheckBox
 
 class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemClickListener) :
+
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
     private var mcontext: Context? = null
     var text: String = ""
@@ -25,12 +27,13 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         val category: TextView = itemview.findViewById(R.id.ite_rv_textc)
         val image: ImageView = itemview.findViewById(R.id.item_rv_image)
         val checkbox: MaterialCheckBox = itemview.findViewById(R.id.usr_fav)
-
         init {
+
             itemview.setOnClickListener(this)
         }
 
         override fun onClick(v: View?) {
+
             val position = absoluteAdapterPosition
             listener.OnItemClick(position)
         }
@@ -59,6 +62,7 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
                 listener.Fovourites(text, 0)
             }
         }
+
 
     }
 

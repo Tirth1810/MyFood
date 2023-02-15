@@ -8,7 +8,7 @@ import com.example.myapp.DataClass.History
 import com.example.myapp.R
 import com.google.firebase.database.core.view.View
 
-class HistoryAdapter(private val list:ArrayList<History>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
+class HistoryAdapter(private val list: ArrayList<String>) : RecyclerView.Adapter<HistoryAdapter.ViewHolder>() {
     class ViewHolder (private val itemmview:android.view.View):RecyclerView.ViewHolder(itemmview){
         val textview=itemmview.findViewById<TextView>(R.id.history_text)
 
@@ -24,6 +24,6 @@ class HistoryAdapter(private val list:ArrayList<History>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-      holder.textview.text=list[position].name
+      holder.textview.text=list[position]
     }
 }

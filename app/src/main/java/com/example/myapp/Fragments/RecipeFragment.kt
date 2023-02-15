@@ -2,7 +2,9 @@ package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,6 +22,7 @@ import com.example.myapp.Histroy_Recipes
 import com.example.myapp.Home
 import com.example.myapp.R
 import com.google.firebase.database.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recycler_view.*
 
 
@@ -102,22 +105,29 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
         val clickedItems = Recipes[position]
         val NAME = clickedItems.Name.toString().trim()
         val intent = Intent(requireContext(), Home::class.java)
-        intent.putExtra("Name", NAME)
+
+       intent.putExtra("Name", NAME)
         startActivity(intent)
     }
 
     override fun Fovourites(text: String, checked: Int) {
         if(checked==1){
             Favourites.add(text)
-            val intent=Intent(requireContext(),Histroy_Recipes::class.java)
-            intent.putExtra("Favourites",Favourites)
-            startActivity(intent)
+            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("Text",Context.MODE_PRIVATE)
+            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+            val gson = Gson()
+            val json:String=gson.toJson(Favourites)
+            editor.putString("Fav",json)
+            editor.commit()
         }
         if (checked==0){
             Favourites.remove(text)
-            val intent=Intent(requireContext(),Histroy_Recipes::class.java)
-            intent.putExtra("Favourites",Favourites)
-            startActivity(intent)
+            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("Text",Context.MODE_PRIVATE)
+            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+            val gson = Gson()
+            val json:String=gson.toJson(Favourites)
+            editor.putString("Fav",json)
+            editor.commit()
         }
     }
 
