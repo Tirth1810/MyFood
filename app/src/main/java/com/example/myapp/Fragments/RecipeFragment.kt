@@ -29,7 +29,7 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
 
     val catagories = ArrayList<Data>()
     val Recipes = ArrayList<Itemas>()
-
+    val Favourites=ArrayList<String>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -108,7 +108,15 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
 
     override fun Fovourites(text: String, checked: Int) {
         if(checked==1){
+            Favourites.add(text)
             val intent=Intent(requireContext(),Histroy_Recipes::class.java)
+            intent.putExtra("Favourites",Favourites)
+            startActivity(intent)
+        }
+        if (checked==0){
+            Favourites.remove(text)
+            val intent=Intent(requireContext(),Histroy_Recipes::class.java)
+            intent.putExtra("Favourites",Favourites)
             startActivity(intent)
         }
     }
