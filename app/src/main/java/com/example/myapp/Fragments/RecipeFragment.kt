@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.SearchView
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.Adapters.ItemAdapter
@@ -18,7 +17,6 @@ import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Itemas
 
 import com.example.myapp.Home
-import com.example.myapp.LoginSignup
 import com.example.myapp.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.activity_recycler_view.*
@@ -105,6 +103,9 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
         val intent = Intent(requireContext(), Home::class.java)
         intent.putExtra("Name", NAME)
         startActivity(intent)
+    }
+
+    override fun Fovourites(text: String, checked: Int) {
     }
 
     override fun onitemclick(position: Int) {
