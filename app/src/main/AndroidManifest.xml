@@ -16,6 +16,9 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
         <activity
+            android:name=".Navigation"
+            android:exported="false" />
+        <activity
             android:name=".Histroy_Recipes"
             android:exported="false" />
         <activity

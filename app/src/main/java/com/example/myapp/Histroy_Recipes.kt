@@ -25,4 +25,5 @@ class Histroy_Recipes : AppCompatActivity() {
         history_rv.adapter=HistoryAdapter( Favourites)
 
     }
+
 }

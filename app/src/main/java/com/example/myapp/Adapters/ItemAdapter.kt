@@ -8,16 +8,21 @@ import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.myapp.DataClass.Itemas
 import com.example.myapp.Fragments.RecipeFragment
 import com.example.myapp.R
 import com.google.android.material.checkbox.MaterialCheckBox
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemClickListener) :
 
     RecyclerView.Adapter<ItemAdapter.ViewHolder>() {
+    private var Favourites = ArrayList<String>()
     private var mcontext: Context? = null
     var text: String = ""
 
@@ -28,7 +33,6 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         val image: ImageView = itemview.findViewById(R.id.item_rv_image)
         val checkbox: MaterialCheckBox = itemview.findViewById(R.id.usr_fav)
         init {
-
             itemview.setOnClickListener(this)
         }
 
@@ -51,6 +55,7 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         val Items = list[position]
         holder.name.text = Items.Name
         holder.category.text = Items.Category
+        holder.checkbox.isChecked=Items.isChecked!!
         Glide.with(mcontext!!).load(Items.imageurl).into(holder.image)
         holder.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
