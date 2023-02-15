@@ -15,6 +15,7 @@ import com.example.myapp.Adapters.ItemAdapter
 import com.example.myapp.Adapters.Recyclerview_Adapter
 import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Itemas
+import com.example.myapp.Histroy_Recipes
 
 import com.example.myapp.Home
 import com.example.myapp.R
@@ -106,6 +107,10 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     }
 
     override fun Fovourites(text: String, checked: Int) {
+        if(checked==1){
+            val intent=Intent(requireContext(),Histroy_Recipes::class.java)
+            startActivity(intent)
+        }
     }
 
     override fun onitemclick(position: Int) {
