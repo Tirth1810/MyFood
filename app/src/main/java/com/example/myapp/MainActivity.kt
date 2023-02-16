@@ -16,6 +16,7 @@ import android.view.Window
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -23,59 +24,113 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
 import com.google.android.material.navigation.NavigationBarView
+import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.jar.Attributes.Name
 
 class MainActivity : AppCompatActivity() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
     private var readStoragePermissionGranted = false
     private var CameraPermissionGranted = false
+    private var backPressedOnce = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.statusBarColor = Color.BLACK
-        permissionLauncher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){permissions->
-            readStoragePermissionGranted=permissions[android.Manifest.permission.READ_EXTERNAL_STORAGE]?:readStoragePermissionGranted
-            CameraPermissionGranted=permissions[android.Manifest.permission.READ_EXTERNAL_STORAGE]?:CameraPermissionGranted
-            if (readStoragePermissionGranted==false){
-                val dialog = Dialog(this)
-                dialog.window?.requestFeature(Window.FEATURE_NO_TITLE) // if you have blue line on top of your dialog, you need use this code
-                dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-                dialog.setCancelable(false)
-                dialog.setContentView(R.layout.customdialog)
-                dialog.window?.setWindowAnimations(R.style.dialogAnimation)
-                val ok=dialog.findViewById<Button>(R.id.custom_dialog_ok)
-                ok.setOnClickListener {
-                    val i = Intent(ACTION_SETTINGS)
-                    startActivity(i)
+        permissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+                readStoragePermissionGranted =
+                    permissions[android.Manifest.permission.READ_EXTERNAL_STORAGE]
+                        ?: readStoragePermissionGranted
+                CameraPermissionGranted =
+                    permissions[android.Manifest.permission.READ_EXTERNAL_STORAGE]
+                        ?: CameraPermissionGranted
+
+                if (readStoragePermissionGranted == false) {
+                    val dialog = Dialog(this)
+                    dialog.window?.requestFeature(Window.FEATURE_NO_TITLE) // if you have blue line on top of your dialog, you need use this code
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.customdialog)
+                    dialog.window?.setWindowAnimations(R.style.dialogAnimation)
+                    val ok = dialog.findViewById<Button>(R.id.custom_dialog_ok)
+                    ok.setOnClickListener {
+                        val i = Intent(ACTION_SETTINGS)
+                        startActivity(i)
+                    }
+                    val cancel = dialog.findViewById<ImageView>(R.id.custom_dialog_cancle)
+                    cancel.setOnClickListener {
+                        readStoragePermissionGranted = true
+                        Toast.makeText(this, "Grant Permission From Settings", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+                    }
+                    dialog.show()
                 }
-                val cancel=dialog.findViewById<ImageView>(R.id.custom_dialog_cancle)
-                cancel.setOnClickListener {
-                    readStoragePermissionGranted=true
-                    Toast.makeText(this,"Grant Permission From Settings",Toast.LENGTH_SHORT).show()
-                    dialog.dismiss()
+                if (CameraPermissionGranted == false) {
+                    val dialog = Dialog(this)
+                    dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.customdialog)
+                    dialog.window?.setWindowAnimations(R.style.dialogAnimation)
+                    val ok = dialog.findViewById<Button>(R.id.custom_dialog_ok)
+                    ok.setOnClickListener {
+                        val i = Intent(ACTION_SETTINGS)
+                        startActivity(i)
+                    }
+                    val cancel = dialog.findViewById<ImageView>(R.id.custom_dialog_cancle)
+                    cancel.setOnClickListener {
+                        CameraPermissionGranted = true
+                        Toast.makeText(this, "Grant Permission From Settings", Toast.LENGTH_SHORT)
+                            .show()
+                        dialog.dismiss()
+                    }
+                    dialog.show()
                 }
-                dialog.show()
-            }
+
             }
         requestPermission()
+        val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+        val headerView = navigationView.getHeaderView(0)
+        val email = headerView.findViewById<View>(R.id.nav_email) as TextView
+        val sharedPreferences = getSharedPreferences("Text", MODE_PRIVATE)
+        val Email=sharedPreferences.getString("Email",null)
+        if (Email!=null){
+            email.text=Email
+        }
+        val googleSharedPreferences = getSharedPreferences("google", MODE_PRIVATE)
+        val Name=googleSharedPreferences.getString("Name",null)
+        if (Name!=null){
+            email.text=Name
+        }
+
     }
 
     override fun onBackPressed() {
-        val dialog = Dialog(this)
-        dialog.window?.requestFeature(Window.FEATURE_NO_TITLE) // if you have blue line on top of your dialog, you need use this code
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.setCancelable(false)
-        dialog.setContentView(R.layout.custom_exit_dialog)
-        dialog.window?.setWindowAnimations(R.style.dialogAnimation)
-        val ok=dialog.findViewById<Button>(R.id.custom_exit_yes)
-        ok.setOnClickListener {
-            finishAffinity()
+        if (backPressedOnce) {
+            super.onBackPressed()
+            return
+        } else {
+            backPressedOnce = true
+            val dialog = Dialog(this)
+            dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.custom_exit_dialog)
+            dialog.window?.setWindowAnimations(R.style.dialogAnimation)
+            val ok = dialog.findViewById<Button>(R.id.custom_exit_yes)
+            ok.setOnClickListener {
+                finishAffinity()
+            }
+            val cancel = dialog.findViewById<Button>(R.id.custom_exit_cancle)
+            cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            dialog.show()
+
         }
-        val cancel=dialog.findViewById<ImageView>(R.id.custom_exit_cancle)
-        cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.show()
     }
 
     private fun requestPermission() {
@@ -92,8 +147,10 @@ class MainActivity : AppCompatActivity() {
         if (!CameraPermissionGranted) {
             permissionList.add(android.Manifest.permission.CAMERA)
         }
-        if(permissionList.isNotEmpty()){
+        if (permissionList.isNotEmpty()) {
             permissionLauncher.launch(permissionList.toTypedArray())
         }
+
+
     }
 }

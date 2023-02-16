@@ -1,5 +1,6 @@
 package com.example.myapp.Fragments
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -23,6 +24,12 @@ class PersonalDetailsFragment : Fragment() {
         val name = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Name)
         val email = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Email)
         val profesion = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Profesion)
+        val googlesharedPreferences =
+            requireActivity().getSharedPreferences("google", Context.MODE_PRIVATE)
+        val ChefName = googlesharedPreferences.getString("Name", null)
+        if (ChefName != null) {
+            name.setText(ChefName)
+        }
         next.setOnClickListener {
             if (name.text.toString().trim().isEmpty()) {
                 name.isFocusable = true

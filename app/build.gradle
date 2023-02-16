@@ -67,5 +67,7 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     implementation 'com.airbnb.android:lottie:5.2.0'
     implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android.gms:play-services-auth:20.4.1'
+    implementation 'com.facebook.android:facebook-login:latest.release'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
 }

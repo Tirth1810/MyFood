@@ -14,9 +14,5 @@ class Navigation : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation)
-        val navHostFrag=supportFragmentManager.findFragmentById(R.id.bottomfragmentContainerView)as NavHostFragment
-        val navController=navHostFrag.navController
-        val bootomnav=findViewById<BottomNavigationView>(R.id.bottom_navigation)
-        setupWithNavController(bootomnav,navController)
     }
 }

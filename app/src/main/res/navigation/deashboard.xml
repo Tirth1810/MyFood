@@ -25,15 +25,16 @@
         <action
             android:id="@+id/action_deashBoard_to_userPosted"
             app:destination="@id/userPosted" />
-        <action
-            android:id="@+id/action_deashBoard_to_recipeHistory"
-            app:destination="@id/recipeHistory" />
+
     </fragment>
     <fragment
         android:id="@+id/profile2"
         android:name="com.example.myapp.Fragments.Profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
+        <argument
+            android:name="Name"
+            app:argType="string" />
         <action
             android:id="@+id/action_profile2_to_loginFragment2"
             app:destination="@id/loginFragment2" />
@@ -61,19 +62,15 @@
             android:id="@+id/action_recipeFragment_to_deashBoard"
             app:destination="@id/deashBoard" />
     </fragment>
-    <fragment
-        android:id="@+id/loginFragment2"
-        android:name="com.example.myapp.Fragments.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
     <activity
         android:id="@+id/userPosted"
         android:name="com.example.myapp.UserPosted"
         android:label="activity_user_posted2"
         tools:layout="@layout/activity_user_posted2" />
+
     <fragment
-        android:id="@+id/recipeHistory"
-        android:name="com.example.myapp.Fragments.RecipeHistory"
-        android:label="fragment_recipe_history"
-        tools:layout="@layout/fragment_recipe_history" />
+        android:id="@+id/loginFragment2"
+        android:name="com.example.myapp.Fragments.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" />
 </navigation>
