@@ -26,10 +26,6 @@ class PersonalDetailsFragment : Fragment() {
         val profesion = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Profesion)
         val googlesharedPreferences =
             requireActivity().getSharedPreferences("google", Context.MODE_PRIVATE)
-        val ChefName = googlesharedPreferences.getString("Name", null)
-        if (ChefName != null) {
-            name.setText(ChefName)
-        }
         next.setOnClickListener {
             if (name.text.toString().trim().isEmpty()) {
                 name.isFocusable = true

@@ -23,8 +23,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
+import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.jar.Attributes.Name
 
@@ -95,6 +98,9 @@ class MainActivity : AppCompatActivity() {
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val email = headerView.findViewById<View>(R.id.nav_email) as TextView
+        val photo=headerView.findViewById<CircleImageView>(R.id.circleImageView8)
+        val currentUser=FirebaseAuth.getInstance().currentUser
+        Glide.with(this).load(currentUser?.photoUrl).into(photo)
         val sharedPreferences = getSharedPreferences("Text", MODE_PRIVATE)
         val Email=sharedPreferences.getString("Email",null)
         if (Email!=null){

@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_loginFragment_to_signupFragment2"
             app:destination="@id/signupFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_otpVerify2"
+            app:destination="@id/otpVerify2" />
     </fragment>
     <fragment
         android:id="@+id/signupFragment"
@@ -26,4 +29,18 @@
             android:id="@+id/action_signupFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/otpVerify2"
+        android:name="com.example.myapp.Fragments.OtpVerify"
+        android:label="fragment_otp_verify"
+        tools:layout="@layout/fragment_otp_verify" >
+        <action
+            android:id="@+id/action_otpVerify2_to_otpAuth2"
+            app:destination="@id/otpAuth2" />
+    </fragment>
+    <fragment
+        android:id="@+id/otpAuth2"
+        android:name="com.example.myapp.Fragments.OtpAuth"
+        android:label="fragment_otp_auth"
+        tools:layout="@layout/fragment_otp_auth" />
 </navigation>

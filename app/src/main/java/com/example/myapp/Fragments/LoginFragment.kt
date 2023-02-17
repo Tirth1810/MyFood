@@ -26,6 +26,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.tasks.Task
+import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.fragment_login.*
@@ -49,10 +50,15 @@ class LoginFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         firebaseauth = FirebaseAuth.getInstance()
+        val view = inflater.inflate(R.layout.fragment_login, container, false)
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
-        val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val phoneauth = view?.findViewById<ImageFilterView>(R.id.login_phone)
+        phoneauth?.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_loginFragment_to_otpVerify2)
+        }
+
         val google = view.findViewById<ImageFilterView>(R.id.google_signin)
         google.setOnClickListener {
             SignInWithGoogle()
@@ -63,7 +69,18 @@ class LoginFragment : Fragment() {
         }
 
         loginBtn = view.findViewById(R.id.login_btn)
+        val phoneNumber = view.findViewById<TextInputEditText>(R.id.login_number)
+        val name = view.findViewById<TextInputEditText>(R.id.login_name)
         loginBtn.setOnClickListener {
+            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
+                "Text",
+                Context.MODE_PRIVATE
+            )
+            val editor: SharedPreferences.Editor = sharedPreferences.edit()
+            editor.putString("Email", login_email.text.toString().trim())
+            editor.putString("Number", phoneNumber.text.toString().trim())
+            editor.putString("Name", name.text.toString().trim())
+            editor.commit()
             if (!Validation.isValidEmail(login_email.text.toString())) {
                 Toast.makeText(
                     activity,
@@ -74,19 +91,16 @@ class LoginFragment : Fragment() {
             } else if (!Validation.iSValidPassword(login_password.text.toString())) {
                 Toast.makeText(activity, "This Field Is Empty ", Toast.LENGTH_SHORT).show()
                 login_password.focusable
+            } else if (!Validation.iSValidPassword(phoneNumber.text.toString())) {
+                Toast.makeText(activity, "Phone Number is required ", Toast.LENGTH_SHORT).show()
+
             } else {
-                val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-                    "Text",
-                    Context.MODE_PRIVATE
-                )
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString("Email", login_email.text.toString().trim())
-                editor.commit()
                 val progressDialog = ProgressDialog(requireContext())
                 progressDialog.setTitle("Login")
                 progressDialog.setMessage("Wait for some time")
                 progressDialog.setCancelable(false)
                 progressDialog.show()
+
                 firebaseauth.signInWithEmailAndPassword(
                     login_email.text.toString().trim(),
                     login_password.text.toString()
@@ -99,7 +113,11 @@ class LoginFragment : Fragment() {
                             startActivity(intent)
                         } else {
                             progressDialog.hide()
-                            Toast.makeText(requireContext(),task.exception.toString(), Toast.LENGTH_SHORT)
+                            Toast.makeText(
+                                requireContext(),
+                                task.exception.toString(),
+                                Toast.LENGTH_SHORT
+                            )
                                 .show()
                         }
 
@@ -153,7 +171,7 @@ class LoginFragment : Fragment() {
                 val editor: SharedPreferences.Editor = goolesharedPreferences.edit()
                 editor.putString("Name", account.displayName)
                 editor.commit()
-                val intent=Intent(requireContext(),MainActivity::class.java)
+                val intent = Intent(requireContext(), MainActivity::class.java)
                 startActivity(intent)
             } else {
                 Toast.makeText(requireContext(), it.exception.toString(), Toast.LENGTH_SHORT).show()

@@ -53,19 +53,14 @@ class SignupFragment : Fragment() {
                 signup_password.focusable
             }
             else{
-                val progressDialog = ProgressDialog(requireContext())
-                progressDialog.setTitle("Sign up")
-                progressDialog.setMessage("Wait for some time")
-                progressDialog.setCancelable(false)
-                progressDialog.show()
                 fauth.createUserWithEmailAndPassword(signup_email.text.toString().trim(),signup_password.text.toString())
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
-                            progressDialog.hide()
+
                             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment)
                         } else {
-                           progressDialog.hide()
-                            Toast.makeText(requireContext(), "Registration Fail", Toast.LENGTH_SHORT).show()
+
+                            Toast.makeText(requireContext(), task.exception.toString(), Toast.LENGTH_SHORT).show()
                         }
                     }
 
