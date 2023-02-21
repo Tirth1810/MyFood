@@ -18,13 +18,19 @@
             app:destination="@id/searchFragment2" />
         <action
             android:id="@+id/action_deashBoard_to_addRecipeFragment2"
-            app:destination="@id/addRecipeFragment2" />
+            app:destination="@id/personalDetailsFragment2" />
         <action
             android:id="@+id/action_deashBoard_to_recipeFragment"
             app:destination="@id/recipeFragment" />
         <action
-            android:id="@+id/action_deashBoard_to_userPosted"
-            app:destination="@id/userPosted" />
+            android:id="@+id/action_deashBoard_self"
+            app:destination="@id/deashBoard" />
+        <action
+            android:id="@+id/action_deashBoard_to_trendingFragment"
+            app:destination="@id/trendingFragment" />
+        <action
+            android:id="@+id/action_deashBoard_to_trendingFragment2"
+            app:destination="@id/trendingFragment" />
 
     </fragment>
     <fragment
@@ -38,6 +44,9 @@
         <action
             android:id="@+id/action_profile2_to_loginFragment2"
             app:destination="@id/loginFragment2" />
+        <action
+            android:id="@+id/action_profile2_to_deashBoard"
+            app:destination="@id/deashBoard" />
     </fragment>
     <fragment
         android:id="@+id/searchFragment2"
@@ -47,12 +56,19 @@
         <argument
             android:name="SearchIngredients"
             app:argType="string" />
+        <action
+            android:id="@+id/action_searchFragment2_to_deashBoard2"
+            app:destination="@id/deashBoard" />
     </fragment>
     <fragment
-        android:id="@+id/addRecipeFragment2"
+        android:id="@+id/personalDetailsFragment2"
         android:name="com.example.myapp.Fragments.AddRecipeFragment"
         android:label="fragment_add_recipe"
-        tools:layout="@layout/fragment_add_recipe" />
+        tools:layout="@layout/fragment_add_recipe" >
+        <action
+            android:id="@+id/action_personaldetalsfragment_2_to_deashBoard"
+            app:destination="@id/deashBoard" />
+    </fragment>
     <fragment
         android:id="@+id/recipeFragment"
         android:name="com.example.myapp.Fragments.RecipeFragment"
@@ -61,16 +77,27 @@
         <action
             android:id="@+id/action_recipeFragment_to_deashBoard"
             app:destination="@id/deashBoard" />
+        <action
+            android:id="@+id/action_recipeFragment_to_deashBoard2"
+            app:destination="@id/deashBoard" />
     </fragment>
-    <activity
-        android:id="@+id/userPosted"
-        android:name="com.example.myapp.UserPosted"
-        android:label="activity_user_posted2"
-        tools:layout="@layout/activity_user_posted2" />
 
     <fragment
         android:id="@+id/loginFragment2"
         android:name="com.example.myapp.Fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment2_to_deashBoard"
+            app:destination="@id/deashBoard" />
+    </fragment>
+    <fragment
+        android:id="@+id/trendingFragment"
+        android:name="com.example.myapp.Fragments.TrendingFragment"
+        android:label="fragment_trending"
+        tools:layout="@layout/fragment_trending" >
+        <action
+            android:id="@+id/action_trendingFragment_to_deashBoard"
+            app:destination="@id/deashBoard" />
+    </fragment>
 </navigation>

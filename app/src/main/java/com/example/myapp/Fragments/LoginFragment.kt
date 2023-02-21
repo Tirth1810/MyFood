@@ -2,16 +2,22 @@ package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,7 +26,6 @@ import androidx.navigation.Navigation
 import com.example.myapp.MainActivity
 import com.example.myapp.R
 import com.example.myapp.Validation
-import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -39,6 +44,7 @@ class LoginFragment : Fragment() {
     private lateinit var firebaseauth: FirebaseAuth
     private lateinit var googleSignInClient: GoogleSignInClient
 
+
     private companion object {
         private const val RC_SIGN_IN = 100
         private const val TAG = "GOOGLE_SIGN_IN_TAG"
@@ -51,6 +57,85 @@ class LoginFragment : Fragment() {
     ): View? {
         firebaseauth = FirebaseAuth.getInstance()
         val view = inflater.inflate(R.layout.fragment_login, container, false)
+        val forgot = view.findViewById<TextView>(R.id.fogot_pass)
+        val phoneNumber = view.findViewById<TextInputEditText>(R.id.login_number)
+        val name = view.findViewById<TextInputEditText>(R.id.login_name)
+        val login_email = view.findViewById<TextInputEditText>(R.id.login_email)
+        val login_password = view.findViewById<TextInputEditText>(R.id.login_password)
+        val Remember: SharedPreferences = requireContext().getSharedPreferences(
+            "Remember Me",
+            Context.MODE_PRIVATE
+        )
+        val remeberMe = view?.findViewById<CheckBox>(R.id.remeberme)
+        remberme(Remember, remeberMe)
+        val rname = Remember.getString("Name", "").toString()
+        name.setText(rname)
+        val rEmail = Remember.getString("Email", "").toString()
+        login_email.setText(rEmail)
+        val rPassword = Remember.getString("Password", "").toString()
+        login_password.setText(rPassword)
+        var rNumber = Remember.getString("Number", "").toString()
+        phoneNumber.setText(rNumber)
+        remeberMe!!.setOnCheckedChangeListener { buttonView, isChecked ->
+            val sharedPrefeRember: SharedPreferences = requireContext().getSharedPreferences(
+                "Remember Me",
+                Context.MODE_PRIVATE
+            )
+            val editor: SharedPreferences.Editor = sharedPrefeRember.edit()
+            if (isChecked) {
+                remeberMe.isChecked = true
+                editor.putString("Email", login_email.text.toString().trim())
+                editor.putString("Number", phoneNumber.text.toString().trim())
+                editor.putString("Name", name.text.toString().trim())
+                editor.putString("Password", login_password.text.toString().trim())
+                editor.commit()
+
+            } else {
+                editor.putString("Email", "")
+                editor.putString("Number", "")
+                editor.putString("Name", "")
+                editor.putString("Password", "")
+                editor.commit()
+            }
+        }
+
+        forgot.setOnClickListener {
+            val dialog = Dialog(requireContext())
+            dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.setCancelable(false)
+            dialog.setContentView(R.layout.forgot_password_dialog)
+            val Email = dialog.findViewById<EditText>(R.id.reset_email)
+            val Reset = dialog.findViewById<Button>(R.id.resetButton)
+            val cancel = dialog.findViewById<Button>(R.id.CANCEL_RESET)
+            cancel.setOnClickListener {
+                dialog.dismiss()
+            }
+            Reset.setOnClickListener {
+                if (Email.text.toString().isEmpty()) {
+                    Email.error = "Enter Email"
+                } else if (
+                    !Validation.isValidEmail(Email.text.toString()) == true
+                ) {
+                    Email.error = "Invalid Email"
+                } else {
+                    val progressDialog = ProgressDialog(requireContext())
+                    progressDialog.setMessage("Loading")
+                    progressDialog.setCancelable(false)
+                    progressDialog.show()
+                    firebaseauth.sendPasswordResetEmail(Email.text.toString())
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(requireContext(), "Email Sent", Toast.LENGTH_SHORT)
+                                    .show()
+                                progressDialog.dismiss()
+                            }
+                        }
+
+                }
+            }
+            dialog.show()
+        }
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build()
         googleSignInClient = GoogleSignIn.getClient(requireContext(), gso)
@@ -69,8 +154,6 @@ class LoginFragment : Fragment() {
         }
 
         loginBtn = view.findViewById(R.id.login_btn)
-        val phoneNumber = view.findViewById<TextInputEditText>(R.id.login_number)
-        val name = view.findViewById<TextInputEditText>(R.id.login_name)
         loginBtn.setOnClickListener {
             val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
                 "Text",
@@ -129,6 +212,15 @@ class LoginFragment : Fragment() {
 
         }
         return view
+    }
+
+    private fun remberme(remember: SharedPreferences, remeberMe: CheckBox?) {
+        val checked = remember.getString("Name", "")
+        if (checked == "") {
+            return
+        } else {
+            remeberMe?.isChecked = true
+        }
     }
 
     private fun SignInWithGoogle() {

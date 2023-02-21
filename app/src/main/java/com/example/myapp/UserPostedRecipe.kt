@@ -1,6 +1,7 @@
 package com.example.myapp
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.os.Bundle
@@ -89,4 +90,7 @@ class UserPostedRecipe : AppCompatActivity() {
         recipessRef.addListenerForSingleValueEvent(eventListener)
     }
 
+    override fun onBackPressed() {
+        startActivity(Intent(this,MainActivity::class.java))
+    }
 }

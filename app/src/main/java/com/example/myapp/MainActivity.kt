@@ -1,5 +1,6 @@
 package com.example.myapp
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
@@ -21,8 +22,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
+import androidx.core.view.isVisible
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.google.android.material.navigation.NavigationBarView
 import com.google.android.material.navigation.NavigationView
@@ -37,6 +43,7 @@ class MainActivity : AppCompatActivity() {
     private var CameraPermissionGranted = false
     private var backPressedOnce = false
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -95,49 +102,58 @@ class MainActivity : AppCompatActivity() {
 
             }
         requestPermission()
+        val navDrawer = findViewById<DrawerLayout>(R.id.main_nav)
+
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val email = headerView.findViewById<View>(R.id.nav_email) as TextView
-        val photo=headerView.findViewById<CircleImageView>(R.id.circleImageView8)
-        val currentUser=FirebaseAuth.getInstance().currentUser
+        val photo = headerView.findViewById<CircleImageView>(R.id.circleImageView8)
+        val currentUser = FirebaseAuth.getInstance().currentUser
         Glide.with(this).load(currentUser?.photoUrl).into(photo)
+
+        navigationView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.nav_home -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.deashBoard)
+                    navDrawer.closeDrawer(GravityCompat.START);
+                }
+                R.id.searchFragment -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.searchFragment2)
+                    navDrawer.closeDrawer(GravityCompat.START);
+                }
+                R.id.nav_recipes -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.recipeFragment)
+                    navDrawer.closeDrawer(GravityCompat.START);
+                }
+                R.id.nav_profile -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.profile2)
+                    navDrawer.closeDrawer(GravityCompat.START);
+                }
+                R.id.nav_add -> {
+                    findNavController(R.id.fragmentContainerView).navigate(R.id.personalDetailsFragment2)
+                    navDrawer.closeDrawer(GravityCompat.START);
+                }
+            }
+            true
+        }
         val sharedPreferences = getSharedPreferences("Text", MODE_PRIVATE)
-        val Email=sharedPreferences.getString("Email",null)
-        if (Email!=null){
-            email.text=Email
+        val Email = sharedPreferences.getString("Email", null)
+        if (Email != null) {
+            email.text = Email
         }
         val googleSharedPreferences = getSharedPreferences("google", MODE_PRIVATE)
-        val Name=googleSharedPreferences.getString("Name",null)
-        if (Name!=null){
-            email.text=Name
+        val Name = googleSharedPreferences.getString("Name", null)
+        if (Name != null) {
+            email.text = Name
         }
 
     }
 
-    override fun onBackPressed() {
-        if (backPressedOnce) {
-            super.onBackPressed()
-            return
-        } else {
-            backPressedOnce = true
-            val dialog = Dialog(this)
-            dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
-            dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            dialog.setCancelable(false)
-            dialog.setContentView(R.layout.custom_exit_dialog)
-            dialog.window?.setWindowAnimations(R.style.dialogAnimation)
-            val ok = dialog.findViewById<Button>(R.id.custom_exit_yes)
-            ok.setOnClickListener {
-                finishAffinity()
-            }
-            val cancel = dialog.findViewById<Button>(R.id.custom_exit_cancle)
-            cancel.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.show()
-
-        }
-    }
+//    override fun onBackPressed() {
+//        val navDrawer = findViewById<DrawerLayout>(R.id.main_nav)
+//        navDrawer.closeDrawer(GravityCompat.START);
+//
+//    }
 
     private fun requestPermission() {
         readStoragePermissionGranted = ContextCompat.checkSelfPermission(

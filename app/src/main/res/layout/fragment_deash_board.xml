@@ -224,7 +224,7 @@
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/history"
+            android:id="@+id/MostViewd"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="10dp"
@@ -243,7 +243,7 @@
                     android:layout_below="@id/cycle"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:text="History"
+                    android:text="Most Viewd"
                     android:textSize="24sp" />
 
                 <ImageView
@@ -252,7 +252,7 @@
                     android:layout_height="75dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/about" />
+                    android:src="@drawable/trending" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
@@ -273,19 +273,19 @@
                     android:id="@+id/textView9"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/airplane"
+                    android:layout_below="@id/posted"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:text="Users Posted"
                     android:textSize="24sp" />
 
                 <ImageView
-                    android:id="@+id/airplane"
+                    android:id="@+id/posted"
                     android:layout_width="75dp"
                     android:layout_height="75dp"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="15dp"
-                    android:src="@drawable/history" />
+                    android:src="@drawable/post" />
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
     </LinearLayout>

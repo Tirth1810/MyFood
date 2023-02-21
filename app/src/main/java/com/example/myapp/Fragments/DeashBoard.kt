@@ -1,15 +1,20 @@
 package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
+import android.app.Dialog
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
+import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
-import com.example.myapp.Histroy_Recipes
 import com.example.myapp.R
 import com.example.myapp.UserPosted
 
@@ -27,7 +32,7 @@ class DeashBoard : Fragment() {
         val profile = view.findViewById<CardView>(R.id.profile)
         val addRecipe = view.findViewById<CardView>(R.id.addRecipe)
         val useruploaded = view.findViewById<CardView>(R.id.userposted)
-        val history = view.findViewById<CardView>(R.id.history)
+        val trending = view.findViewById<CardView>(R.id.MostViewd)
         profile.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_profile2)
         }
@@ -35,8 +40,7 @@ class DeashBoard : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_searchFragment22)
         }
         useruploaded.setOnClickListener {
-            val intent = Intent(requireContext(), UserPosted::class.java)
-            startActivity(intent)
+            startActivity(Intent(requireContext(), UserPosted::class.java))
         }
         recipe.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_recipeFragment)
@@ -45,11 +49,36 @@ class DeashBoard : Fragment() {
             Navigation.findNavController(view)
                 .navigate(R.id.action_deashBoard_to_addRecipeFragment2)
         }
-       history.setOnClickListener {
-           val intent = Intent(requireContext(), Histroy_Recipes::class.java)
-           startActivity(intent)
+        trending.setOnClickListener {
+            Navigation.findNavController(view)
+                .navigate(R.id.action_deashBoard_to_trendingFragment)
         }
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val dialog = Dialog(requireContext())
+                    dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.custom_exit_dialog)
+                    dialog.window?.setWindowAnimations(R.style.dialogAnimation)
+                    val ok = dialog.findViewById<Button>(R.id.custom_exit_yes)
+                    ok.setOnClickListener {
+                        activity?.finishAffinity()
+                    }
+                    val cancel = dialog.findViewById<Button>(R.id.custom_exit_cancle)
+                    cancel.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+
+                }
+            })
+    }
 }
+

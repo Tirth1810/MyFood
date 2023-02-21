@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -60,11 +61,11 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         holder.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 text = holder.name.text.toString()
-                listener.Fovourites(text, 1)
+                listener.Fovourites(text, 1, holder.checkbox)
             }
             if (!isChecked) {
                 text = holder.name.text.toString()
-                listener.Fovourites(text, 0)
+                listener.Fovourites(text, 0,holder.checkbox)
             }
         }
 
@@ -79,7 +80,7 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
 
     interface OnItemClickListener {
         fun OnItemClick(position: Int)
-        fun Fovourites(text: String, checked: Int)
+        fun Fovourites(text: String, checked: Int,checkbox:CheckBox)
     }
 
 

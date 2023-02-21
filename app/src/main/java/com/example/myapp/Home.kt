@@ -32,10 +32,5 @@ class   Home : AppCompatActivity() {
 
         }
 
-        r_add.setOnClickListener {
-            intent= Intent(this,Histroy_Recipes::class.java)
-            intent.putExtra("Data",recipe_name.text.toString())
-            startActivity(intent)
-        }
     }
 }

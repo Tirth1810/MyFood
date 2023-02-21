@@ -1,5 +1,6 @@
 package com.example.myapp.Fragments
 
+import androidx.navigation.fragment.findNavController
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -194,5 +196,13 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
         }
     }
 
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_searchFragment2_to_deashBoard2)
+                }
+            })
+    }
 }

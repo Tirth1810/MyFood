@@ -2,28 +2,31 @@ package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.Adapters.ItemAdapter
 import com.example.myapp.Adapters.Recyclerview_Adapter
 import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Itemas
-import com.example.myapp.Histroy_Recipes
 
 import com.example.myapp.Home
 import com.example.myapp.R
 import com.google.firebase.database.*
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_recycler_view.*
+import kotlinx.android.synthetic.main.fragment_deash_board.*
 
 
 class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
@@ -31,8 +34,9 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     private lateinit var firebaseReffrence: DatabaseReference
 
     val catagories = ArrayList<Data>()
+    val filteredCategories = ArrayList<Data>()
     val Recipes = ArrayList<Itemas>()
-    val Favourites=ArrayList<String>()
+    val filterList = ArrayList<Itemas>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -83,14 +87,31 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
 
                         val allRecipeS = recipes.getValue(Itemas::class.java)
                         Recipes.add(allRecipeS!!)
-
+                        filterList.add(allRecipeS)
                         item_recyclerview?.adapter = ItemAdapter(Recipes, this@RecipeFragment)
 
                     }
+
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
+            }
+        })
+        val search = view.findViewById<EditText>(R.id.searchRecipe)
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isEmpty()) {
+                    item_recyclerview?.adapter = ItemAdapter(Recipes, this@RecipeFragment)
+                } else {
+                    Filter(s.toString(), Recipes)
+                }
             }
         })
 
@@ -101,37 +122,48 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     }
 
 
+    private fun Filter(Search: String, Recipes: ArrayList<Itemas>) {
+        filterList.clear()
+        for (Recipe in Recipes) {
+            if (Recipe.Name!!.toLowerCase()!!.contains(Search.toLowerCase())) {
+                filterList.add(Recipe)
+                val item_recyclerview =
+                    view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+                item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
+
+            }
+        }
+    }
+
     override fun OnItemClick(position: Int) {
-        val clickedItems = Recipes[position]
+        val clickedItems = filterList[position]
         val NAME = clickedItems.Name.toString().trim()
         val intent = Intent(requireContext(), Home::class.java)
 
-       intent.putExtra("Name", NAME)
+        intent.putExtra("Name", NAME)
         startActivity(intent)
     }
 
-    override fun Fovourites(text: String, checked: Int) {
-        if(checked==1){
-            Favourites.add(text)
-            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("Text",Context.MODE_PRIVATE)
-            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-            val gson = Gson()
-            val json:String=gson.toJson(Favourites)
-            editor.putString("Fav",json)
-            editor.commit()
+    override fun Fovourites(text: String, checked: Int, checkbox: CheckBox) {
+        if (checked == 1) {
+            checkbox.isChecked=true
         }
-        if (checked==0){
-            Favourites.remove(text)
-            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences("Text",Context.MODE_PRIVATE)
-            val editor:SharedPreferences.Editor =  sharedPreferences.edit()
-            val gson = Gson()
-            val json:String=gson.toJson(Favourites)
-            editor.putString("Fav",json)
-            editor.commit()
+        if (checked == 0) {
+            checkbox.isChecked = false
         }
     }
 
     override fun onitemclick(position: Int) {
+
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_recipeFragment_to_deashBoard2)
+                }
+            })
+    }
 }

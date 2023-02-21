@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.findNavController
 import com.example.myapp.R
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,4 +25,13 @@ class AddRecipeFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_add_recipe, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    findNavController().navigate(R.id.action_personaldetalsfragment_2_to_deashBoard)
+                }
+            })
+    }
 }
