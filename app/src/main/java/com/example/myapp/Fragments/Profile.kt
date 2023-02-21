@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -34,6 +35,10 @@ class Profile : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
+        val back = view.findViewById<ImageView>(R.id.profile_back)
+        back.setOnClickListener {
+            findNavController().navigate(R.id.action_profile2_to_deashBoard)
+        }
         val profileName = view.findViewById<EditText>(R.id.profile_Name)
         val logOut = view.findViewById<Button>(R.id.logout_btn)
         val phonenumber = view.findViewById<TextView>(R.id.profile_phone)
@@ -54,28 +59,11 @@ class Profile : Fragment() {
         val name = googlesharedPreferences.getString("Name", null)
         if (name != null) {
             profileName.setText(name)
-        }
-        val sharedPreferences =
-            requireActivity().getSharedPreferences("Text", AppCompatActivity.MODE_PRIVATE)
-        val profileLoginName = sharedPreferences.getString("Name", null)
-        if (profileLoginName != null) {
-            profileName.setText(profileLoginName.toString())
-        }
-        val phone = sharedPreferences.getString("Number", null)
-        if (phone != null) {
 
-            phonenumber.text = phone.toString()
-            if (phonenumber != null) {
-                val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-                    "Otp",
-                    Context.MODE_PRIVATE
-                )
-                val editor: SharedPreferences.Editor = sharedPreferences.edit()
-                editor.putString("OtpPhone", phonenumber.text.toString())
-            }
         }
-
         return view
+
+
     }
 
 
@@ -89,3 +77,4 @@ class Profile : Fragment() {
             })
     }
 }
+

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/deashboard"
     app:startDestination="@id/deashBoard">
@@ -18,19 +18,19 @@
             app:destination="@id/searchFragment2" />
         <action
             android:id="@+id/action_deashBoard_to_addRecipeFragment2"
-            app:destination="@id/personalDetailsFragment2" />
+            app:destination="@id/addRecipeFragment2" />
         <action
             android:id="@+id/action_deashBoard_to_recipeFragment"
             app:destination="@id/recipeFragment" />
         <action
-            android:id="@+id/action_deashBoard_self"
-            app:destination="@id/deashBoard" />
-        <action
             android:id="@+id/action_deashBoard_to_trendingFragment"
             app:destination="@id/trendingFragment" />
         <action
-            android:id="@+id/action_deashBoard_to_trendingFragment2"
-            app:destination="@id/trendingFragment" />
+            android:id="@+id/action_deashBoard_to_recipeFragment2"
+            app:destination="@id/recipeFragment" />
+        <action
+            android:id="@+id/action_deashBoard_to_personalDetailsFragment2"
+            app:destination="@id/personalDetailsFragment2" />
 
     </fragment>
     <fragment
@@ -38,9 +38,6 @@
         android:name="com.example.myapp.Fragments.Profile"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
-        <argument
-            android:name="Name"
-            app:argType="string" />
         <action
             android:id="@+id/action_profile2_to_loginFragment2"
             app:destination="@id/loginFragment2" />
@@ -57,16 +54,22 @@
             android:name="SearchIngredients"
             app:argType="string" />
         <action
+            android:id="@+id/action_searchFragment2_to_deashBoard"
+            app:destination="@id/deashBoard" />
+        <action
             android:id="@+id/action_searchFragment2_to_deashBoard2"
             app:destination="@id/deashBoard" />
     </fragment>
     <fragment
-        android:id="@+id/personalDetailsFragment2"
+        android:id="@+id/addRecipeFragment2"
         android:name="com.example.myapp.Fragments.AddRecipeFragment"
         android:label="fragment_add_recipe"
         tools:layout="@layout/fragment_add_recipe" >
         <action
-            android:id="@+id/action_personaldetalsfragment_2_to_deashBoard"
+            android:id="@+id/action_addRecipeFragment2_to_deashBoard"
+            app:destination="@id/deashBoard" />
+        <action
+            android:id="@+id/action_addRecipeFragment2_to_deashBoard2"
             app:destination="@id/deashBoard" />
     </fragment>
     <fragment
@@ -81,16 +84,11 @@
             android:id="@+id/action_recipeFragment_to_deashBoard2"
             app:destination="@id/deashBoard" />
     </fragment>
-
     <fragment
         android:id="@+id/loginFragment2"
         android:name="com.example.myapp.Fragments.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/action_loginFragment2_to_deashBoard"
-            app:destination="@id/deashBoard" />
-    </fragment>
+        tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/trendingFragment"
         android:name="com.example.myapp.Fragments.TrendingFragment"
@@ -99,5 +97,14 @@
         <action
             android:id="@+id/action_trendingFragment_to_deashBoard"
             app:destination="@id/deashBoard" />
+        <action
+            android:id="@+id/action_trendingFragment_to_deashBoard3"
+            app:destination="@id/deashBoard" />
     </fragment>
+    <fragment
+        android:id="@+id/personalDetailsFragment2"
+        android:name="com.example.myapp.Fragments.PersonalDetailsFragment"
+        android:label="fragment_personal_details"
+        tools:layout="@layout/fragment_personal_details" />
+
 </navigation>

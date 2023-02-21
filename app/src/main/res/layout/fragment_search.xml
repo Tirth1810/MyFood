@@ -38,7 +38,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
             <ImageView
-                android:id="@+id/ing_back"
+                android:id="@+id/search_back"
                 android:layout_width="@dimen/_20sdp"
                 android:layout_height="@dimen/_20sdp"
                 android:layout_marginLeft="@dimen/_10sdp"
@@ -57,7 +57,7 @@
                 app:cardElevation="@dimen/_10sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ing_back">
+                app:layout_constraintTop_toBottomOf="@+id/search_back">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"

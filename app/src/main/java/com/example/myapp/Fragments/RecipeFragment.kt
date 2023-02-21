@@ -2,6 +2,7 @@ package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -13,6 +14,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -37,6 +39,7 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     val filteredCategories = ArrayList<Data>()
     val Recipes = ArrayList<Itemas>()
     val filterList = ArrayList<Itemas>()
+    val catfilter=ArrayList<Itemas>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -83,11 +86,23 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
             override fun onDataChange(snapshot: DataSnapshot) {
                 progressDialog.hide()
                 if (snapshot.exists()) {
+                    val sharedPreferences =
+                        requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+
+                    var selected = sharedPreferences.getStringSet("selectedItems", null)
                     for (recipes in snapshot.children) {
 
                         val allRecipeS = recipes.getValue(Itemas::class.java)
                         Recipes.add(allRecipeS!!)
-                        filterList.add(allRecipeS)
+                        Recipes.map {
+                            for (i in 0 until selected!!.size) {
+                                if (it.Name!! == selected!!.elementAt(i)) {
+                                    it.selected = true
+                                }
+                            }
+                        }
+                        filterList.addAll(Recipes)
+                        catfilter.addAll(Recipes)
                         item_recyclerview?.adapter = ItemAdapter(Recipes, this@RecipeFragment)
 
                     }
@@ -146,15 +161,27 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
 
     override fun Fovourites(text: String, checked: Int, checkbox: CheckBox) {
         if (checked == 1) {
-            checkbox.isChecked=true
         }
         if (checked == 0) {
-            checkbox.isChecked = false
         }
     }
 
     override fun onitemclick(position: Int) {
-
+        val select = catagories[position]
+        if (select.Name == "Home") {
+            val item_recyclerview =
+                view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+            item_recyclerview?.adapter = ItemAdapter(catfilter, this@RecipeFragment)
+        }
+        filterList.clear()
+        for (sRecipe in Recipes) {
+            if (sRecipe.Category!!.contains(select.Name.toString())) {
+                filterList.add(sRecipe)
+                val item_recyclerview =
+                    view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+                item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
+            }
+        }
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

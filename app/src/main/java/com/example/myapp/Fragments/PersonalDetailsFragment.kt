@@ -1,12 +1,10 @@
 package com.example.myapp.Fragments
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import com.example.myapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -25,8 +23,6 @@ class PersonalDetailsFragment : Fragment() {
         val name = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Name)
         val email = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Email)
         val profesion = view.findViewById<TextInputEditText>(R.id.addRecipe_PD_Profesion)
-        val googlesharedPreferences =
-            requireActivity().getSharedPreferences("google", Context.MODE_PRIVATE)
         next.setOnClickListener {
             if (name.text.toString().trim().isEmpty()) {
                 name.isFocusable = true
@@ -39,7 +35,7 @@ class PersonalDetailsFragment : Fragment() {
                 profesion.error = "Enter Profesion"
             } else {
                 val direction =
-                    PersonalDetailsFragmentDirections.actionPersonalDetailsFragmentToRecipeDetalsFragment(
+                    PersonalDetailsFragmentDirections.actionPersonalDetailsFragment3ToRecipeDetalsFragment(
                         name.text.toString().trim(),
                         email.text.toString().trim(),
                         profesion.text.toString().trim()
@@ -49,4 +45,5 @@ class PersonalDetailsFragment : Fragment() {
         }
         return view
     }
+
 }

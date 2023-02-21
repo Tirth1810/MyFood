@@ -11,13 +11,14 @@
 
 
         <CheckBox
+            android:buttonTint="@android:color/white"
             android:text="Remember Me"
             android:textColor="@android:color/white"
             android:id="@+id/remeberme"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="@+id/textInputLayout3"
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            app:layout_constraintStart_toStartOf="@+id/textInputLayout2"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
         <TextView
             android:id="@+id/textView"
@@ -32,35 +33,10 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-       android:layout_marginTop="@dimen/_20sdp"
-        android:id="@+id/textInputLayoutname"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/_280sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Name"
-        android:padding="@dimen/_5sdp"
-        android:textColorHint="@android:color/white"
-        app:boxStrokeColor="@android:color/white"
-        app:hintTextColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:backgroundTint="@android:color/white" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="@dimen/_10sdp"
+        android:elevation="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_90sdp"
         android:id="@+id/textInputLayout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="@dimen/_280sdp"
@@ -75,9 +51,10 @@
         app:hintTextColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutname">
+        app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:textColor="@android:color/white"
             android:id="@+id/login_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,6 +64,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:elevation="@dimen/_50sdp"
             android:id="@+id/textInputLayout2"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="@dimen/_280sdp"
@@ -108,40 +86,13 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/login_password"
                 android:layout_width="match_parent"
+                android:textColor="@android:color/white"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_5sdp"
                 android:backgroundTint="@android:color/white" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayout3"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="@dimen/_280sdp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_15sdp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="@dimen/_15sdp"
-        android:backgroundTint="@android:color/white"
-        android:hint="Phone Number"
-        android:padding="@dimen/_5sdp"
-        android:textColorHint="@android:color/white"
-        app:boxStrokeColor="@android:color/white"
-        app:hintTextColor="@android:color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2"
-        app:passwordToggleEnabled="true">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/login_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:backgroundTint="@android:color/white" />
-
-    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
             android:layout_marginStart="@dimen/_80sdp"
@@ -152,15 +103,15 @@
             android:text="Forgot Password!!"
             android:textColor="@android:color/white"
             android:textSize="@dimen/_12ssp"
-            app:layout_constraintEnd_toEndOf="@+id/textInputLayout3"
+            app:layout_constraintEnd_toEndOf="@+id/textInputLayout2"
 
-            app:layout_constraintTop_toBottomOf="@+id/textInputLayout3" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
         <Button
             android:id="@+id/login_btn"
             android:layout_width="@dimen/_100sdp"
             android:layout_height="@dimen/_40sdp"
-            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginTop="@dimen/_50sdp"
             android:backgroundTint="@android:color/white"
             android:text="LOGIN"
             android:textColor="@android:color/black"
@@ -216,34 +167,33 @@
                 android:background="@android:color/white" />
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_20sdp"
-            android:gravity="center"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_30sdp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/google_signin"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/google" />
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/google_signin"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/google" />
 
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/facebook" />
-            <androidx.constraintlayout.utils.widget.ImageFilterView
-                android:id="@+id/login_phone"
-                android:layout_width="@dimen/_60sdp"
-                android:layout_height="@dimen/_40sdp"
-                android:src="@drawable/baseline_phone_24_white" />
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/facebook" />
 
-        </LinearLayout>
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:id="@+id/login_phone"
+            android:layout_width="@dimen/_60sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/baseline_phone_24_white" />
+
+    </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

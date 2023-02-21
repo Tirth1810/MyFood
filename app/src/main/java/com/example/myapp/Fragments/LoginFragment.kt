@@ -20,6 +20,7 @@ import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.navigation.Navigation
@@ -58,8 +59,6 @@ class LoginFragment : Fragment() {
         firebaseauth = FirebaseAuth.getInstance()
         val view = inflater.inflate(R.layout.fragment_login, container, false)
         val forgot = view.findViewById<TextView>(R.id.fogot_pass)
-        val phoneNumber = view.findViewById<TextInputEditText>(R.id.login_number)
-        val name = view.findViewById<TextInputEditText>(R.id.login_name)
         val login_email = view.findViewById<TextInputEditText>(R.id.login_email)
         val login_password = view.findViewById<TextInputEditText>(R.id.login_password)
         val Remember: SharedPreferences = requireContext().getSharedPreferences(
@@ -68,14 +67,10 @@ class LoginFragment : Fragment() {
         )
         val remeberMe = view?.findViewById<CheckBox>(R.id.remeberme)
         remberme(Remember, remeberMe)
-        val rname = Remember.getString("Name", "").toString()
-        name.setText(rname)
         val rEmail = Remember.getString("Email", "").toString()
         login_email.setText(rEmail)
         val rPassword = Remember.getString("Password", "").toString()
         login_password.setText(rPassword)
-        var rNumber = Remember.getString("Number", "").toString()
-        phoneNumber.setText(rNumber)
         remeberMe!!.setOnCheckedChangeListener { buttonView, isChecked ->
             val sharedPrefeRember: SharedPreferences = requireContext().getSharedPreferences(
                 "Remember Me",
@@ -85,8 +80,6 @@ class LoginFragment : Fragment() {
             if (isChecked) {
                 remeberMe.isChecked = true
                 editor.putString("Email", login_email.text.toString().trim())
-                editor.putString("Number", phoneNumber.text.toString().trim())
-                editor.putString("Name", name.text.toString().trim())
                 editor.putString("Password", login_password.text.toString().trim())
                 editor.commit()
 
@@ -161,8 +154,7 @@ class LoginFragment : Fragment() {
             )
             val editor: SharedPreferences.Editor = sharedPreferences.edit()
             editor.putString("Email", login_email.text.toString().trim())
-            editor.putString("Number", phoneNumber.text.toString().trim())
-            editor.putString("Name", name.text.toString().trim())
+
             editor.commit()
             if (!Validation.isValidEmail(login_email.text.toString())) {
                 Toast.makeText(
@@ -174,10 +166,7 @@ class LoginFragment : Fragment() {
             } else if (!Validation.iSValidPassword(login_password.text.toString())) {
                 Toast.makeText(activity, "This Field Is Empty ", Toast.LENGTH_SHORT).show()
                 login_password.focusable
-            } else if (!Validation.iSValidPassword(phoneNumber.text.toString())) {
-                Toast.makeText(activity, "Phone Number is required ", Toast.LENGTH_SHORT).show()
-
-            } else {
+            }  else {
                 val progressDialog = ProgressDialog(requireContext())
                 progressDialog.setTitle("Login")
                 progressDialog.setMessage("Wait for some time")
@@ -215,7 +204,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun remberme(remember: SharedPreferences, remeberMe: CheckBox?) {
-        val checked = remember.getString("Name", "")
+        val checked = remember.getString("Email", "")
         if (checked == "") {
             return
         } else {
@@ -271,4 +260,27 @@ class LoginFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val dialog = Dialog(requireContext())
+                    dialog.window?.requestFeature(Window.FEATURE_NO_TITLE)
+                    dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                    dialog.setCancelable(false)
+                    dialog.setContentView(R.layout.custom_exit_dialog)
+                    dialog.window?.setWindowAnimations(R.style.dialogAnimation)
+                    val ok = dialog.findViewById<Button>(R.id.custom_exit_yes)
+                    ok.setOnClickListener {
+                        activity?.finishAffinity()
+                    }
+                    val cancel = dialog.findViewById<Button>(R.id.custom_exit_cancle)
+                    cancel.setOnClickListener {
+                        dialog.dismiss()
+                    }
+                    dialog.show()
+                }
+            })
+    }
 }

@@ -10,8 +10,10 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
 import com.example.myapp.R
 import com.example.myapp.Validation
 import com.google.firebase.auth.FirebaseAuth
@@ -37,7 +39,7 @@ class SignupFragment : Fragment() {
         loginText.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment)
         }
-        fauth=FirebaseAuth.getInstance()
+        fauth = FirebaseAuth.getInstance()
         signUpBtn = view.findViewById(R.id.signup_btn)
         signUpBtn.setOnClickListener {
 
@@ -51,23 +53,40 @@ class SignupFragment : Fragment() {
             } else if (!Validation.iSValidPassword(signup_password.text.toString().trim())) {
                 Toast.makeText(activity, "This Field Is Empty ", Toast.LENGTH_SHORT).show()
                 signup_password.focusable
-            }
-            else{
-                fauth.createUserWithEmailAndPassword(signup_email.text.toString().trim(),signup_password.text.toString())
+            } else {
+                fauth.createUserWithEmailAndPassword(
+                    signup_email.text.toString().trim(),
+                    signup_password.text.toString()
+                )
                     .addOnCompleteListener(requireActivity()) { task ->
                         if (task.isSuccessful) {
 
-                            Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment)
+                            Navigation.findNavController(view)
+                                .navigate(R.id.action_signupFragment_to_loginFragment)
                         } else {
 
-                            Toast.makeText(requireContext(), task.exception.toString(), Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                task.exception.toString(),
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
 
-                }
             }
+        }
 
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    Navigation.findNavController(view)
+                        .navigate(R.id.action_signupFragment_to_loginFragment)
+                }
+            })
+    }
 }

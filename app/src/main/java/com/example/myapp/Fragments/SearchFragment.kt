@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.SearchView
 import android.widget.Toast
@@ -41,11 +42,16 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
     val vegies = ArrayList<VegData>()
 
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
+        val back=view.findViewById<ImageView>(R.id.search_back)
+        back.setOnClickListener {
+            findNavController().navigate(R.id.action_searchFragment2_to_deashBoard2)
+        }
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.setMessage("Loading")
         progressDialog.setCancelable(false)

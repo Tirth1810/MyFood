@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -28,6 +29,10 @@ class TrendingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_trending, container, false)
+        val back = view.findViewById<ImageView>(R.id.trending_back)
+        back.setOnClickListener {
+            findNavController().navigate(R.id.action_trendingFragment_to_deashBoard)
+        }
         val trending = view.findViewById<RecyclerView>(R.id.trending_recyclerview)
         trending?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)

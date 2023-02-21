@@ -7,7 +7,17 @@
     tools:context=".Fragments.AddRecipeFragment">
 
 
+    <ImageView
+        android:id="@+id/addrecipe_back"
+        android:layout_width="@dimen/_20sdp"
+        android:layout_height="@dimen/_20sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:src="@drawable/baseline_arrow_back_24"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 <androidx.fragment.app.FragmentContainerView
+    android:layout_marginTop="@dimen/_40sdp"
     android:id="@+id/addrecipeFragmentContainer"
     android:name="androidx.navigation.fragment.NavHostFragment"
     android:layout_width="match_parent"

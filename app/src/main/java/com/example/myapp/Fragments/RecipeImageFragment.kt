@@ -80,7 +80,7 @@ class RecipeImageFragment : Fragment() {
         back.setOnClickListener {
 
             Navigation.findNavController(view)
-                .navigate(R.id.action_recipeImageFragment_to_personalDetailsFragment)
+                .navigate(R.id.action_recipeImageFragment_to_personalDetailsFragment3)
         }
 
         return view

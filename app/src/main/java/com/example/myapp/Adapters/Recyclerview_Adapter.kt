@@ -54,6 +54,7 @@ class Recyclerview_Adapter(
         Glide.with(aContext!!).load(Data.imageurl).into(holder.imageview)
         holder.itemView.setOnClickListener {
             selectedItemPosition = position
+            listener.onitemclick(selectedItemPosition)
             notifyDataSetChanged()
         }
         if(selectedItemPosition == position)

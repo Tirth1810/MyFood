@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentContainer
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -17,6 +19,7 @@ import com.example.myapp.Adapters.ItemAdapter
 import com.example.myapp.Adapters.UserUploaded
 import com.example.myapp.DataClass.Itemas
 import com.example.myapp.DataClass.PostRecipe
+import com.example.myapp.MainActivity
 import com.example.myapp.R
 import com.example.myapp.UserPostedRecipe
 import com.google.firebase.database.*
@@ -25,11 +28,16 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
     private lateinit var dref: DatabaseReference
     val Recipes = ArrayList<PostRecipe>()
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_user_uploaded_list, container, false)
+        val back = view.findViewById<ImageView>(R.id.userposted_back)
+        back.setOnClickListener {
+       startActivity(Intent(requireActivity(),MainActivity::class.java))
+        }
         val recyclerview = view.findViewById<RecyclerView>(R.id.userupladedlist)
         recyclerview?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
@@ -70,4 +78,13 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         startActivity(itent)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    startActivity(Intent(requireActivity(),MainActivity::class.java))
+                }
+            })
+    }
 }
