@@ -26,7 +26,7 @@ import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.navigation.Navigation
 import com.example.myapp.Activity.MainActivity
 import com.example.myapp.R
-import com.example.myapp.Validation
+import com.example.myapp.Validation.Validation
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

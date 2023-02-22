@@ -16,7 +16,7 @@ import androidx.annotation.RequiresApi
 import androidx.navigation.Navigation
 import com.example.myapp.DataClass.Users
 import com.example.myapp.R
-import com.example.myapp.Validation
+import com.example.myapp.Validation.Validation
 import com.google.android.material.textfield.TextInputEditText
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
