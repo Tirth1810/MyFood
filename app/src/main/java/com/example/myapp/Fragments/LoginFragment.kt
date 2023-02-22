@@ -166,13 +166,12 @@ class LoginFragment : Fragment() {
             } else if (!Validation.iSValidPassword(login_password.text.toString())) {
                 Toast.makeText(activity, "This Field Is Empty ", Toast.LENGTH_SHORT).show()
                 login_password.focusable
-            }  else {
+            } else {
                 val progressDialog = ProgressDialog(requireContext())
                 progressDialog.setTitle("Login")
                 progressDialog.setMessage("Wait for some time")
                 progressDialog.setCancelable(false)
                 progressDialog.show()
-
                 firebaseauth.signInWithEmailAndPassword(
                     login_email.text.toString().trim(),
                     login_password.text.toString()

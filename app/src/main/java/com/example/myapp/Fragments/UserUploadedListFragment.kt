@@ -40,7 +40,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         }
         val recyclerview = view.findViewById<RecyclerView>(R.id.userupladedlist)
         recyclerview?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.setMessage("Loading")
         progressDialog.setCancelable(false)

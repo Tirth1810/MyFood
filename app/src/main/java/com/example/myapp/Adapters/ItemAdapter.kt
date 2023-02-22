@@ -66,8 +66,8 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         holder.name.text = Items.Name
         holder.category.text = Items.Category
         Glide.with(mcontext!!).load(Items.imageurl).into(holder.image)
-        val sharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        sharedPreferences.getStringSet("selectedItems",null)?.let {
+        val checksharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        checksharedPreferences.getStringSet("selectedItems",null)?.let {
             for(i in 0 until it.size) {
                 selectedItems.add(it.elementAt(i))
             }
@@ -75,8 +75,8 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
         holder.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
                 selectedItems!!.add(holder.name.text.toString())
-                val sharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
+                val checksharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                val editor = checksharedPreferences.edit()
                 editor.putStringSet("selectedItems",selectedItems)
                 editor.apply()
                 text = holder.name.text.toString()
@@ -85,8 +85,8 @@ class ItemAdapter(private val list: List<Itemas>, private val listener: OnItemCl
                 text = holder.name.text.toString()
                 listener.Fovourites(text, 0, holder.checkbox)
                 selectedItems!!.remove(holder.name.text.toString())
-                val sharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-                val editor = sharedPreferences.edit()
+                val checksharedPreferences = holder.itemView.context.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+                val editor = checksharedPreferences.edit()
                 editor.putStringSet("selectedItems",selectedItems)
                 editor.apply()
             }

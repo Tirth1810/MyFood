@@ -34,7 +34,7 @@ class UserUploaded(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.itemrecyclerview_card, parent, false)
+            .inflate(R.layout.users_post, parent, false)
         return ViewHolder(view)
     }
 

@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.ViewCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,6 @@ import com.example.myapp.DataClass.Itemas
 import com.example.myapp.Home
 import com.example.myapp.R
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_recycler_view.*
 import kotlinx.android.synthetic.main.fragment_deash_board.*
 
 
@@ -39,7 +39,7 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     val filteredCategories = ArrayList<Data>()
     val Recipes = ArrayList<Itemas>()
     val filterList = ArrayList<Itemas>()
-    val catfilter=ArrayList<Itemas>()
+    val catfilter = ArrayList<Itemas>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -80,7 +80,8 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
         })
         val item_recyclerview =
             view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
-        item_recyclerview?.layoutManager = LinearLayoutManager(requireContext())
+        item_recyclerview?.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         firebaseReffrence = FirebaseDatabase.getInstance().getReference("Recipe")
         firebaseReffrence.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -90,22 +91,25 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
                         requireActivity().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
 
                     var selected = sharedPreferences.getStringSet("selectedItems", null)
-                    for (recipes in snapshot.children) {
 
-                        val allRecipeS = recipes.getValue(Itemas::class.java)
-                        Recipes.add(allRecipeS!!)
-                        Recipes.map {
-                            for (i in 0 until selected!!.size) {
-                                if (it.Name!! == selected!!.elementAt(i)) {
-                                    it.selected = true
+                        for (recipes in snapshot.children) {
+
+                            val allRecipeS = recipes.getValue(Itemas::class.java)
+                            Recipes.add(allRecipeS!!)
+                            if (selected != null) {
+                                Recipes.map {
+                                    for (i in 0 until selected!!.size) {
+                                        if (it.Name!! == selected!!.elementAt(i)) {
+                                            it.selected = true
+                                        }
+                                    }
                                 }
                             }
-                        }
-                        filterList.addAll(Recipes)
-                        catfilter.addAll(Recipes)
-                        item_recyclerview?.adapter = ItemAdapter(Recipes, this@RecipeFragment)
+
 
                     }
+                    filterList.addAll(Recipes)
+                    item_recyclerview?.adapter = ItemAdapter(Recipes, this@RecipeFragment)
 
                 }
             }
@@ -144,9 +148,36 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
                 filterList.add(Recipe)
                 val item_recyclerview =
                     view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+                item_recyclerview?.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                 item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
 
             }
+        }
+    }
+
+    override fun onitemclick(position: Int) {
+        val select = catagories[position]
+
+        if (select.Name == "Home") {
+            val item_recyclerview =
+                view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+            item_recyclerview?.layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
+
+        }
+        filterList.clear()
+        for (sRecipe in Recipes) {
+            if (sRecipe.Category!!.contains(select.Name.toString())) {
+                filterList.add(sRecipe)
+                val item_recyclerview =
+                    view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
+                item_recyclerview?.layoutManager =
+                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
+            }
+
         }
     }
 
@@ -166,23 +197,6 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
         }
     }
 
-    override fun onitemclick(position: Int) {
-        val select = catagories[position]
-        if (select.Name == "Home") {
-            val item_recyclerview =
-                view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
-            item_recyclerview?.adapter = ItemAdapter(catfilter, this@RecipeFragment)
-        }
-        filterList.clear()
-        for (sRecipe in Recipes) {
-            if (sRecipe.Category!!.contains(select.Name.toString())) {
-                filterList.add(sRecipe)
-                val item_recyclerview =
-                    view?.findViewById<androidx.recyclerview.widget.RecyclerView>(R.id.item_rv)
-                item_recyclerview?.adapter = ItemAdapter(filterList, this@RecipeFragment)
-            }
-        }
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

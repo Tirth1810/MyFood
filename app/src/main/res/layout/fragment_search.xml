@@ -20,9 +20,7 @@
         app:layout_constraintVertical_bias="0.98" />
 
 
-            <SearchView
-                android:iconifiedByDefault="false"
-                android:queryHint="Search Here"
+            <EditText
                 android:id="@+id/Search_ing"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"

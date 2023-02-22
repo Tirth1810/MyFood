@@ -5,12 +5,13 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
-import android.widget.ProgressBar
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
@@ -19,9 +20,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Adapters.DairyAdapter
 import com.example.myapp.Adapters.FruitsAdapter
 import com.example.myapp.Adapters.IngAdapter
-import com.example.myapp.Adapters.Recyclerview_Adapter
 import com.example.myapp.DataClass.Dairy
-import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Fruits
 import com.example.myapp.DataClass.VegData
 import com.example.myapp.R
@@ -40,7 +39,10 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
     var floatingArrayList = ArrayList<String>()
     val fruits = ArrayList<Fruits>()
     val vegies = ArrayList<VegData>()
-
+    val dairy = ArrayList<Dairy>()
+    val filteringFruits = ArrayList<Fruits>()
+    val filteringVegies = ArrayList<VegData>()
+    val filteringDairy = ArrayList<Dairy>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -48,7 +50,7 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_search, container, false)
-        val back=view.findViewById<ImageView>(R.id.search_back)
+        val back = view.findViewById<ImageView>(R.id.search_back)
         back.setOnClickListener {
             findNavController().navigate(R.id.action_searchFragment2_to_deashBoard2)
         }
@@ -123,7 +125,7 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
         val dairy_recyclerview = view.findViewById<RecyclerView>(R.id.dairy_rv)
         dairy_recyclerview?.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        val dairy = ArrayList<Dairy>()
+
 
         ingDtabaseReffrence = FirebaseDatabase.getInstance().getReference("Dairy")
         ingDtabaseReffrence.addValueEventListener(object : ValueEventListener {
@@ -145,9 +147,62 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
             }
         })
         floatingActionClick(floatingArrayList)
+        val search = view.findViewById<EditText>(R.id.Search_ing)
+        search.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isEmpty()) {
+                    veg_rv?.adapter =
+                        IngAdapter(vegies, this@SearchFragment)
+                    Fruits_rv?.adapter =
+                        FruitsAdapter(fruits, this@SearchFragment)
+                    dairy_recyclerview?.adapter =
+                        DairyAdapter(dairy, this@SearchFragment)
+                } else {
+                    filter(s.toString(), vegies, fruits, dairy)
+                }
+            }
+        })
 
         return view
+    }
+
+    private fun filter(
+        text: String,
+        vegiesFilter: ArrayList<VegData>,
+        fruitsFilter: ArrayList<Fruits>,
+        dairyFilter: ArrayList<Dairy>
+    ) {
+        filteringVegies.clear()
+        for (veg in vegiesFilter) {
+            if (veg.Name!!.toLowerCase().contains(text.toLowerCase())) {
+                filteringVegies.add(veg)
+                veg_rv?.adapter =
+                    IngAdapter(filteringVegies, this@SearchFragment)
+            }
+
+        }
+        filteringFruits.clear()
+        for (fruits in fruitsFilter) {
+            if (fruits.Name!!.toLowerCase().contains(text.toLowerCase())) {
+                filteringFruits.add(fruits)
+                Fruits_rv?.adapter =
+                    FruitsAdapter(filteringFruits, this@SearchFragment)
+            }
+        }
+        filteringDairy.clear()
+        for (dairy in dairyFilter) {
+            if (dairy.Name!!.toLowerCase().contains(text.toLowerCase())) {
+                filteringDairy.add(dairy)
+                dairy_rv?.adapter = DairyAdapter(filteringDairy, this@SearchFragment)
+            }
+        }
     }
 
     override fun onFruitsSelect(fruitsText: String, checked: Int) {
