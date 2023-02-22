@@ -14,9 +14,7 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
-import androidx.core.view.ViewCompat
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,7 +23,7 @@ import com.example.myapp.Adapters.Recyclerview_Adapter
 import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Itemas
 
-import com.example.myapp.Home
+import com.example.myapp.Activity.Home
 import com.example.myapp.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_deash_board.*

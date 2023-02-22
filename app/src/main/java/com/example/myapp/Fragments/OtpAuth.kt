@@ -11,7 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import com.example.myapp.MainActivity
+import com.example.myapp.Activity.MainActivity
 import com.example.myapp.R
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException

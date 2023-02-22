@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:id="@+id/drawer_layout"
     android:layout_height="match_parent"
-    tools:context=".Navigation">
+    tools:context=".Activity.Navigation">
 <com.google.android.material.navigation.NavigationView
     app:menu="@menu/bottomnnavigationview"
     android:id="@+id/nav_view"

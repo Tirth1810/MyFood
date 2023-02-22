@@ -16,7 +16,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import com.example.myapp.R
-import com.example.myapp.UserPosted
+import com.example.myapp.Activity.UserPosted
 
 class DeashBoard : Fragment() {
 

@@ -1,7 +1,6 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -9,12 +8,9 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.Settings.ACTION_BLUETOOTH_SETTINGS
 import android.provider.Settings.ACTION_SETTINGS
-import android.view.MenuItem
 import android.view.View
 import android.view.Window
-import android.view.WindowManager
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -23,19 +19,14 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.navigation.Navigation
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
-import com.google.android.material.navigation.NavigationBarView
+import com.example.myapp.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.jar.Attributes.Name
 
 class MainActivity : AppCompatActivity() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>

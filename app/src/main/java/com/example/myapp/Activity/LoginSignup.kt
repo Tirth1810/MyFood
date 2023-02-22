@@ -1,11 +1,10 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
+import com.example.myapp.R
 import com.google.firebase.auth.FirebaseAuth
 
 class LoginSignup : AppCompatActivity() {

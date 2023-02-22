@@ -1,13 +1,9 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.myapp.R
 
 class Navigation : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")

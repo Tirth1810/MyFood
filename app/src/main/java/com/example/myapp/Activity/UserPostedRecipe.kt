@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -7,9 +7,8 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import com.example.myapp.R
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_filter_recipe_show.*
 import kotlinx.android.synthetic.main.activity_user_posted_recipe.*
 
 
@@ -91,6 +90,6 @@ class UserPostedRecipe : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this,MainActivity::class.java))
+        startActivity(Intent(this, MainActivity::class.java))
     }
 }

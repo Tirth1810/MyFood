@@ -6,7 +6,7 @@
     android:fillViewport="true"
     android:id="@+id/main_nav"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Activity.MainActivity"
     tools:openDrawer="start">
 
     <ScrollView

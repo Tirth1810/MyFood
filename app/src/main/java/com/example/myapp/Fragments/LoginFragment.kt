@@ -24,7 +24,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.constraintlayout.utils.widget.ImageFilterView
 import androidx.navigation.Navigation
-import com.example.myapp.MainActivity
+import com.example.myapp.Activity.MainActivity
 import com.example.myapp.R
 import com.example.myapp.Validation
 import com.google.android.gms.auth.api.signin.GoogleSignIn

@@ -24,7 +24,7 @@ import com.example.myapp.DataClass.Dairy
 import com.example.myapp.DataClass.Fruits
 import com.example.myapp.DataClass.VegData
 import com.example.myapp.R
-import com.example.myapp.RecipeBasedOnIngridients
+import com.example.myapp.Activity.RecipeBasedOnIngridients
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_search.*

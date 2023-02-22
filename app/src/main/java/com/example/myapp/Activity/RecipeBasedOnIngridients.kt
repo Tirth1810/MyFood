@@ -1,17 +1,16 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Adapters.IngredientsBaseRecipeAdapter
 import com.example.myapp.DataClass.IngredientsBasedDataClass
 import com.example.myapp.DataClass.Itemas
+import com.example.myapp.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase

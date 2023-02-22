@@ -1,4 +1,4 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
 import android.widget.Toast
+import com.example.myapp.R
 
 class Splash : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,7 +18,7 @@ class Splash : AppCompatActivity() {
         window.statusBarColor=Color.TRANSPARENT
         val handler = android.os.Handler()
         handler.postDelayed({
-            val intent= Intent(this,Introduction::class.java)
+            val intent= Intent(this, Introduction::class.java)
             startActivity(intent)
         }, 3000)
     }

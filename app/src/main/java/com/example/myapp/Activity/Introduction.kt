@@ -1,11 +1,11 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.myapp.Adapters.ViewPagerAdapter
+import com.example.myapp.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_introduction.*
 

@@ -10,18 +10,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
-import androidx.fragment.app.FragmentContainer
-import androidx.navigation.Navigation
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapp.Adapters.ItemAdapter
 import com.example.myapp.Adapters.UserUploaded
-import com.example.myapp.DataClass.Itemas
 import com.example.myapp.DataClass.PostRecipe
-import com.example.myapp.MainActivity
+import com.example.myapp.Activity.MainActivity
 import com.example.myapp.R
-import com.example.myapp.UserPostedRecipe
+import com.example.myapp.Activity.UserPostedRecipe
 import com.google.firebase.database.*
 
 class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
@@ -36,7 +31,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         val view = inflater.inflate(R.layout.fragment_user_uploaded_list, container, false)
         val back = view.findViewById<ImageView>(R.id.userposted_back)
         back.setOnClickListener {
-       startActivity(Intent(requireActivity(),MainActivity::class.java))
+       startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
         val recyclerview = view.findViewById<RecyclerView>(R.id.userupladedlist)
         recyclerview?.layoutManager =
@@ -73,7 +68,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
     override fun onUseClick(position: Int) {
         val clickedItems = Recipes[position]
         val NAME = clickedItems.recipeName.toString().trim()
-        val itent=Intent(requireContext(),UserPostedRecipe::class.java)
+        val itent=Intent(requireContext(), UserPostedRecipe::class.java)
         itent.putExtra("Name",NAME)
         startActivity(itent)
     }
@@ -83,7 +78,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner,
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
-                    startActivity(Intent(requireActivity(),MainActivity::class.java))
+                    startActivity(Intent(requireActivity(), MainActivity::class.java))
                 }
             })
     }

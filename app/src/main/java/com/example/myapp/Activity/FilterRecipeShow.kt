@@ -1,13 +1,13 @@
-package com.example.myapp
+package com.example.myapp.Activity
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.bumptech.glide.Glide
+import com.example.myapp.R
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import kotlinx.android.synthetic.main.activity_filter_recipe_show.*
-import kotlinx.android.synthetic.main.activity_home.*
 
 class FilterRecipeShow : AppCompatActivity() {
     private lateinit var database: DatabaseReference

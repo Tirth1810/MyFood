@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.navigation.Navigation
-import com.example.myapp.LoginSignup
+import com.example.myapp.Activity.LoginSignup
 import com.example.myapp.R
 
 class Third : Fragment() {
@@ -32,7 +32,7 @@ class Third : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_third_to_second)
         }
         getStarted?.setOnClickListener {
-            val intent= Intent(activity,LoginSignup::class.java)
+            val intent= Intent(activity, LoginSignup::class.java)
             startActivity(intent)
         }
         return view

@@ -1,7 +1,6 @@
 package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -11,7 +10,6 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ProgressBar
 import androidx.navigation.fragment.findNavController
-import com.example.myapp.Navigation
 import com.example.myapp.R
 import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
