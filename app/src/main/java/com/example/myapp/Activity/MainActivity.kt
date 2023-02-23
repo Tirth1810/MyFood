@@ -2,8 +2,12 @@ package com.example.myapp.Activity
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +22,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -25,6 +30,10 @@ import com.bumptech.glide.Glide
 import com.example.myapp.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -33,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private var readStoragePermissionGranted = false
     private var CameraPermissionGranted = false
     private var backPressedOnce = false
+    val mauth = FirebaseAuth.getInstance()
+    val currentUser = mauth.currentUser
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -97,11 +108,11 @@ class MainActivity : AppCompatActivity() {
 
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
-        val email = headerView.findViewById<View>(R.id.nav_email) as TextView
-        val photo = headerView.findViewById<CircleImageView>(R.id.circleImageView8)
-        val currentUser = FirebaseAuth.getInstance().currentUser
-        Glide.with(this).load(currentUser?.photoUrl).into(photo)
+        val uername = headerView.findViewById<View>(R.id.nav_email) as TextView
+        val profilephoto = headerView.findViewById<CircleImageView>(R.id.circleImageView8)
 
+
+        val currentUser = FirebaseAuth.getInstance().currentUser
         navigationView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
@@ -127,17 +138,48 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-        val sharedPreferences = getSharedPreferences("Text", MODE_PRIVATE)
-        val Email = sharedPreferences.getString("Email", null)
-        if (Email != null) {
-            email.text = Email
-        }
-        val googleSharedPreferences = getSharedPreferences("google", MODE_PRIVATE)
-        val Name = googleSharedPreferences.getString("Name", null)
-        if (Name != null) {
-            email.text = Name
-        }
+        val sharedPreferences: SharedPreferences = this.getSharedPreferences(
+            "Text",
+            Context.MODE_PRIVATE
+        )
+        val profile = sharedPreferences.getString("Email", "").toString()
 
+
+        val rootRef = FirebaseDatabase.getInstance().reference
+        val userRef = rootRef.child("Users")
+        val eventListener: ValueEventListener = object : ValueEventListener {
+            @SuppressLint("CommitPrefEdits")
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+
+                for (ds in dataSnapshot.children) {
+                    val userEmail = ds.child("email").getValue(String::class.java)
+                    if (userEmail!!.contains(profile.toString())) {
+                        val name = ds.child("name").getValue().toString()
+                        val usetimage = ds.child("imageurl").getValue().toString()
+                        uername.text = name
+                        if (usetimage.toUri() != null) {
+                            val bytes =
+                                android.util.Base64.decode(usetimage, android.util.Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            profilephoto.setImageBitmap(bitmap)
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        }
+        userRef.addListenerForSingleValueEvent(eventListener)
+        if (profilephoto == null) {
+            if (currentUser?.photoUrl != null) {
+                Glide.with(this).load(currentUser?.photoUrl).into(profilephoto!!)
+                uername.text=currentUser?.displayName
+            }
+
+        }
     }
 
 //    override fun onBackPressed() {

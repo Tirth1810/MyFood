@@ -15,6 +15,7 @@
         android:src="@drawable/baseline_arrow_back_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_img"
         android:layout_width="@dimen/_100sdp"
@@ -26,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/camera"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_marginStart="@dimen/_90sdp"
@@ -38,11 +39,11 @@
         app:layout_constraintTop_toTopOf="@+id/profile_img" />
 
     <ImageView
-        android:layout_marginTop="@dimen/_40sdp"
         android:id="@+id/imageView6"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_40sdp"
         android:src="@drawable/baseline_person_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_img" />
@@ -58,12 +59,12 @@
         app:layout_constraintTop_toTopOf="@+id/imageView6" />
 
     <EditText
-        android:enabled="false"
         android:id="@+id/profile_Name"
-        android:layout_width="@dimen/_100sdp"
+        android:layout_width="@dimen/_200sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:background="@android:color/transparent"
+        android:enabled="false"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView6"
@@ -80,22 +81,22 @@
         app:layout_constraintTop_toBottomOf="@+id/profile_Name" />
 
     <ImageView
-        android:layout_marginTop="@dimen/_30sdp"
         android:id="@+id/imageView7"
         android:layout_width="@dimen/_30sdp"
         android:layout_height="@dimen/_30sdp"
         android:layout_marginStart="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_30sdp"
         android:src="@drawable/baseline_info_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view" />
 
     <View
-        android:background="@color/ColorPrimary"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginStart="@dimen/_50sdp"
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1sdp"
+        android:layout_marginStart="@dimen/_50sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@color/ColorPrimary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView22"
         app:layout_constraintTop_toBottomOf="@+id/textView22" />
@@ -114,21 +115,33 @@
 
     <EditText
         android:id="@+id/editText2"
-        android:layout_width="@dimen/_100sdp"
+        android:layout_width="@dimen/_190sdp"
         android:layout_height="@dimen/_20sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:background="@android:color/transparent"
-        android:text="ABCD"
+        android:enabled="false"
         android:textColor="@android:color/black"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/imageView7"
         app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <ImageView
-        android:src="@drawable/edit"
-        android:layout_marginEnd="@dimen/_30sdp"
+        android:id="@+id/profileEdit"
         android:layout_width="@dimen/_25sdp"
         android:layout_height="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:src="@drawable/edit"
+        app:layout_constraintBottom_toBottomOf="@+id/editText2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/editText2" />
+
+    <ImageView
+        android:id="@+id/profileEditDone"
+        android:layout_width="@dimen/_25sdp"
+        android:layout_height="@dimen/_25sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:src="@drawable/check"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/editText2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editText2" />
@@ -167,11 +180,11 @@
         app:layout_constraintTop_toTopOf="@+id/imageView9" />
 
     <TextView
-        android:enabled="false"
         android:id="@+id/profile_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_10sdp"
+        android:enabled="false"
         android:text="+91 7043827201"
         android:textColor="@android:color/black"
         android:textStyle="bold"
@@ -179,10 +192,10 @@
         app:layout_constraintTop_toBottomOf="@+id/textView23" />
 
     <Button
-        android:layout_marginTop="@dimen/_20sdp"
         android:id="@+id/logout_btn"
         android:layout_width="@dimen/_140sdp"
         android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="@dimen/_100sdp"
         android:background="@drawable/et_bg"
         android:text="Log out"
