@@ -72,7 +72,7 @@ class SignupFragment : Fragment() {
                 val signupPassword = signup_password.text.toString().trim()
                 val signupNumber = number.text.toString().trim()
                 dref = FirebaseDatabase.getInstance().getReference("Users")
-                val user = Users(signupName, signupEmail, signupPassword, signupNumber,null,null)
+                val user = Users(signupName, signupEmail, signupPassword, signupNumber,null,null,null)
                 val userid = dref.push().key!!
                 val Sharedpref = requireContext().getSharedPreferences("Cred", Context.MODE_PRIVATE)
                 val editor: SharedPreferences.Editor = Sharedpref.edit()

@@ -6,5 +6,6 @@ data class Users(
     val Password:String?=null,
     val Number:String?=null,
     val Status: String?,
-    val imageurl: String?
+    val imageurl: String?,
+    val CoverPhoto:String?
 )

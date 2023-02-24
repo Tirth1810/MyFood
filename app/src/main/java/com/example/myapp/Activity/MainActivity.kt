@@ -1,15 +1,18 @@
 package com.example.myapp.Activity
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings.ACTION_SETTINGS
@@ -19,8 +22,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.core.view.GravityCompat
@@ -30,12 +36,12 @@ import com.bumptech.glide.Glide
 import com.example.myapp.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.ByteArrayOutputStream
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
@@ -43,7 +49,10 @@ class MainActivity : AppCompatActivity() {
     private var CameraPermissionGranted = false
     private var backPressedOnce = false
     val mauth = FirebaseAuth.getInstance()
-    val currentUser = mauth.currentUser
+    private lateinit var dref: DatabaseReference
+    val requestcode: Int = 1234
+    var image: String? = ""
+
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -109,8 +118,16 @@ class MainActivity : AppCompatActivity() {
         val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
         val headerView = navigationView.getHeaderView(0)
         val uername = headerView.findViewById<View>(R.id.nav_email) as TextView
-        val profilephoto = headerView.findViewById<CircleImageView>(R.id.circleImageView8)
+        val sortPhoto = headerView.findViewById<CircleImageView>(R.id.circleImageView9)
+        val profilephoto = headerView.findViewById<ImageView>(R.id.circleImageView8)
+        profilephoto.setOnClickListener {
+            val mtintent = Intent(Intent.ACTION_GET_CONTENT)
+            mtintent.setType("image/*")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                activityResultLauncher.launch(mtintent)
+            }
 
+        }
 
         val currentUser = FirebaseAuth.getInstance().currentUser
         navigationView.setNavigationItemSelectedListener {
@@ -156,13 +173,31 @@ class MainActivity : AppCompatActivity() {
                     if (userEmail!!.contains(profile.toString())) {
                         val name = ds.child("name").getValue().toString()
                         val usetimage = ds.child("imageurl").getValue().toString()
+                        val coverPhoto = ds.child("CoverPhoto").getValue().toString()
                         uername.text = name
                         if (usetimage.toUri() != null) {
                             val bytes =
                                 android.util.Base64.decode(usetimage, android.util.Base64.DEFAULT)
                             val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                            profilephoto.setImageBitmap(bitmap)
+                            sortPhoto.setImageBitmap(bitmap)
+
                         }
+                        if (coverPhoto.toUri() != null) {
+                            val bytes =
+                                android.util.Base64.decode(coverPhoto, android.util.Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            profilephoto.setImageBitmap(bitmap)
+
+                        }
+                        val parent = ds.key
+                        val keyvaluesharedPreferences: SharedPreferences =
+                            this@MainActivity.getSharedPreferences(
+                                "userid",
+                                Context.MODE_PRIVATE
+                            )
+                        val editor: SharedPreferences.Editor = keyvaluesharedPreferences.edit()
+                        editor.putString("this", parent)
+                        editor.commit()
                     }
                 }
             }
@@ -173,13 +208,7 @@ class MainActivity : AppCompatActivity() {
 
         }
         userRef.addListenerForSingleValueEvent(eventListener)
-        if (profilephoto == null) {
-            if (currentUser?.photoUrl != null) {
-                Glide.with(this).load(currentUser?.photoUrl).into(profilephoto!!)
-                uername.text=currentUser?.displayName
-            }
 
-        }
     }
 
 //    override fun onBackPressed() {
@@ -208,4 +237,40 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private val activityResultLauncher = registerForActivityResult<Intent, ActivityResult>(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result: ActivityResult ->
+
+        if (result.resultCode == Activity.RESULT_OK) {
+            val uri = result.data!!.data
+            try {
+                val inputSteam = this.contentResolver?.openInputStream(uri!!)
+                val bitMap = BitmapFactory.decodeStream(inputSteam)
+                val stream = ByteArrayOutputStream()
+                bitMap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val byte = stream.toByteArray()
+                image = Base64.getEncoder().encodeToString(byte)
+                val navigationView = findViewById<View>(R.id.nav_view) as NavigationView
+                val headerView = navigationView.getHeaderView(0)
+                val profilephoto = headerView.findViewById<ImageView>(R.id.circleImageView8)
+                profilephoto?.setImageBitmap(bitMap)
+                inputSteam!!.close()
+                val keyvaluePreferences: SharedPreferences =
+                    this.getSharedPreferences(
+                        "userid",
+                        Context.MODE_PRIVATE
+                    )
+                val user = keyvaluePreferences.getString("this", "")
+                dref = FirebaseDatabase.getInstance().getReference("Users")
+                dref.child(user.toString()).child("CoverPhoto").setValue(image.toString())
+
+            } catch (ex: java.lang.Exception) {
+                Toast.makeText(this, ex.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+    }
+
 }

@@ -145,12 +145,7 @@ class ProfileFragment : Fragment() {
             }
 
         }
-        if (profile_img == null) {
-            if (currentUser?.photoUrl != null) {
-                Glide.with(view).load(currentUser?.photoUrl).into(progileimage)
-            }
-        } else {
-        }
+
 
         return view
 
