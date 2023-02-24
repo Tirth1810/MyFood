@@ -4,10 +4,13 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.activity.OnBackPressedCallback
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +25,7 @@ import com.google.firebase.database.*
 class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
     private lateinit var dref: DatabaseReference
     val Recipes = ArrayList<PostRecipe>()
+    val filter = ArrayList<PostRecipe>()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -31,7 +35,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         val view = inflater.inflate(R.layout.fragment_user_uploaded_list, container, false)
         val back = view.findViewById<ImageView>(R.id.userposted_back)
         back.setOnClickListener {
-       startActivity(Intent(requireActivity(), MainActivity::class.java))
+            startActivity(Intent(requireActivity(), MainActivity::class.java))
         }
         val recyclerview = view.findViewById<RecyclerView>(R.id.userupladedlist)
         recyclerview?.layoutManager =
@@ -52,6 +56,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
                         recyclerview.adapter = UserUploaded(Recipes, this@UserUploadedListFragment)
 
                     }
+                    filter.addAll(Recipes)
                 }
             }
 
@@ -59,17 +64,44 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
                 progressDialog.hide()
             }
         })
+        val searchChef = view.findViewById<EditText>(R.id.chefSearch)
+        searchChef.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (s.toString().isEmpty()) {
+                    recyclerview.adapter = UserUploaded(Recipes, this@UserUploadedListFragment)
+                } else {
+                    Filter(s.toString(), Recipes)
+                }
+            }
+        })
 
         return view
     }
 
+    private fun Filter(Text: String, recipes: ArrayList<PostRecipe>) {
+        filter.clear()
+        for (FilterRecipe in recipes) {
+            if (FilterRecipe.personName!!.toLowerCase()!!.contains(Text.toLowerCase())) {
+                filter.add(FilterRecipe)
+                val recyclerview = view?.findViewById<RecyclerView>(R.id.userupladedlist)
+                recyclerview?.adapter = UserUploaded(filter, this@UserUploadedListFragment)
+            }
+        }
+
+    }
+
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onUseClick(position: Int) {
-        val clickedItems = Recipes[position]
+        val clickedItems = filter[position]
         val NAME = clickedItems.recipeName.toString().trim()
-        val itent=Intent(requireContext(), UserPostedRecipeShowActivity::class.java)
-        itent.putExtra("Name",NAME)
+        val itent = Intent(requireContext(), UserPostedRecipeShowActivity::class.java)
+        itent.putExtra("Name", NAME)
         startActivity(itent)
     }
 

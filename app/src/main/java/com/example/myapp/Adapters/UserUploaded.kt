@@ -20,10 +20,10 @@ class UserUploaded(
     RecyclerView.Adapter<UserUploaded.ViewHolder>() {
     inner class ViewHolder(private val itemview: View) : RecyclerView.ViewHolder(itemview),
         OnClickListener {
-        val name: TextView = itemView.findViewById(R.id.trending_name)
-        val imageview: CircleImageView = itemView.findViewById(R.id.trending_img)
-        val chefname: TextView = itemview.findViewById(R.id.cat)
-        var bg: ConstraintLayout =itemview.findViewById(R.id.trending_bg)
+        val name: TextView = itemView.findViewById(R.id.user_name)
+        val imageview: CircleImageView = itemView.findViewById(R.id.users_img)
+        val chefname: TextView = itemview.findViewById(R.id.user_category)
+        var bg: ConstraintLayout = itemview.findViewById(R.id.userposted_bg)
 
         init {
             itemview.setOnClickListener(this)
@@ -37,7 +37,7 @@ class UserUploaded(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.trending_rv, parent, false)
+            .inflate(R.layout.userposted_rv, parent, false)
         return ViewHolder(view)
     }
 

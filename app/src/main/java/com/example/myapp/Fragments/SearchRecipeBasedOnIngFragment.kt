@@ -32,7 +32,7 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 
-class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
+class SearchRecipeBasedOnIngFragment : Fragment(), DairyAdapter.OnSelectedItems,
     FruitsAdapter.OnFruitsSelectedItems, IngAdapter.OnVegDataSelected {
     private lateinit var ingDtabaseReffrence: DatabaseReference
     val ing = ArrayList<VegData>()
@@ -73,7 +73,7 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
                         vegies.add(vegiesCategories!!)
 
                         veg_rv?.adapter =
-                            IngAdapter(vegies, this@SearchFragment)
+                            IngAdapter(vegies, this@SearchRecipeBasedOnIngFragment)
                     }
 
                 }
@@ -97,7 +97,7 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
                         fruits.add(fruitsCategories!!)
 
                         Fruits_rv?.adapter =
-                            FruitsAdapter(fruits, this@SearchFragment)
+                            FruitsAdapter(fruits, this@SearchRecipeBasedOnIngFragment)
                     }
 
                 }
@@ -111,7 +111,8 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
                             Toast.LENGTH_SHORT
                         ).show()
                     } else {
-                        val intent = Intent(requireContext(), RecipeBasedOnIngridientsActivity::class.java)
+                        val intent =
+                            Intent(requireContext(), RecipeBasedOnIngridientsActivity::class.java)
                         intent.putExtra("Ing", fruits.toString())
                         startActivity(intent)
                     }
@@ -137,7 +138,7 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
                         dairy.add(dairyCategories!!)
 
                         dairy_recyclerview?.adapter =
-                            DairyAdapter(dairy, this@SearchFragment)
+                            DairyAdapter(dairy, this@SearchRecipeBasedOnIngFragment)
                     }
 
                 }
@@ -159,11 +160,11 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isEmpty()) {
                     veg_rv?.adapter =
-                        IngAdapter(vegies, this@SearchFragment)
+                        IngAdapter(vegies, this@SearchRecipeBasedOnIngFragment)
                     Fruits_rv?.adapter =
-                        FruitsAdapter(fruits, this@SearchFragment)
+                        FruitsAdapter(fruits, this@SearchRecipeBasedOnIngFragment)
                     dairy_recyclerview?.adapter =
-                        DairyAdapter(dairy, this@SearchFragment)
+                        DairyAdapter(dairy, this@SearchRecipeBasedOnIngFragment)
                 } else {
                     filter(s.toString(), vegies, fruits, dairy)
                 }
@@ -184,23 +185,24 @@ class SearchFragment : Fragment(), DairyAdapter.OnSelectedItems,
             if (veg.Name!!.toLowerCase().contains(text.toLowerCase())) {
                 filteringVegies.add(veg)
                 veg_rv?.adapter =
-                    IngAdapter(filteringVegies, this@SearchFragment)
+                    IngAdapter(filteringVegies, this@SearchRecipeBasedOnIngFragment)
             }
-
         }
         filteringFruits.clear()
         for (fruits in fruitsFilter) {
             if (fruits.Name!!.toLowerCase().contains(text.toLowerCase())) {
                 filteringFruits.add(fruits)
                 Fruits_rv?.adapter =
-                    FruitsAdapter(filteringFruits, this@SearchFragment)
+                    FruitsAdapter(filteringFruits, this@SearchRecipeBasedOnIngFragment)
             }
         }
         filteringDairy.clear()
         for (dairy in dairyFilter) {
             if (dairy.Name!!.toLowerCase().contains(text.toLowerCase())) {
                 filteringDairy.add(dairy)
-                dairy_rv?.adapter = DairyAdapter(filteringDairy, this@SearchFragment)
+                val dairy_recyclerview = view?.findViewById<RecyclerView>(R.id.dairy_rv)
+                dairy_recyclerview?.adapter =
+                    DairyAdapter(filteringDairy, this@SearchRecipeBasedOnIngFragment)
             }
         }
     }
