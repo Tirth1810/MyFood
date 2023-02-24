@@ -4,9 +4,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.myapp.Fragments.First
-import com.example.myapp.Fragments.Second
-import com.example.myapp.Fragments.Third
+import com.example.myapp.Fragments.IntroductionFirstFragment
+import com.example.myapp.Fragments.IntroductionSecondFragment
+import com.example.myapp.Fragments.IntroductionThirdFragment
 
 class ViewPagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle) :
     FragmentStateAdapter(fragmentManager,lifecycle) {
@@ -17,13 +17,13 @@ class ViewPagerAdapter(fragmentManager: FragmentManager,lifecycle: Lifecycle) :
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> {
-                First()
+                IntroductionFirstFragment()
             }
             1 -> {
-                Second()
+                IntroductionSecondFragment()
             }
             2 -> {
-                Third()
+                IntroductionThirdFragment()
             }
             else -> {
                 Fragment()

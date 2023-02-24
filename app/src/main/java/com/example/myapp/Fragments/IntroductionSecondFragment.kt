@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.example.myapp.R
 
-class Second : Fragment() {
+class IntroductionSecondFragment : Fragment() {
 
 
     override fun onCreateView(

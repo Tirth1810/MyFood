@@ -16,7 +16,7 @@ import com.example.myapp.Adapters.UserUploaded
 import com.example.myapp.DataClass.PostRecipe
 import com.example.myapp.Activity.MainActivity
 import com.example.myapp.R
-import com.example.myapp.Activity.UserPostedRecipe
+import com.example.myapp.Activity.UserPostedRecipeShowActivity
 import com.google.firebase.database.*
 
 class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
@@ -35,7 +35,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
         }
         val recyclerview = view.findViewById<RecyclerView>(R.id.userupladedlist)
         recyclerview?.layoutManager =
-            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, true)
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.setMessage("Loading")
         progressDialog.setCancelable(false)
@@ -68,7 +68,7 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
     override fun onUseClick(position: Int) {
         val clickedItems = Recipes[position]
         val NAME = clickedItems.recipeName.toString().trim()
-        val itent=Intent(requireContext(), UserPostedRecipe::class.java)
+        val itent=Intent(requireContext(), UserPostedRecipeShowActivity::class.java)
         itent.putExtra("Name",NAME)
         startActivity(itent)
     }

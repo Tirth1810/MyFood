@@ -2,19 +2,14 @@ package com.example.myapp.Fragments
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Activity.RESULT_OK
 import android.app.ProgressDialog
-import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +22,7 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.myapp.Activity.LoginSignup
+import com.example.myapp.Activity.LoginSignupActivity
 import com.example.myapp.R
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.auth.FirebaseAuth
@@ -38,7 +33,7 @@ import java.io.ByteArrayOutputStream
 import java.util.*
 
 
-class Profile : Fragment() {
+class ProfileFragment : Fragment() {
     val mauth = FirebaseAuth.getInstance()
     private lateinit var dref: DatabaseReference
     val requestcode: Int = 1234
@@ -87,7 +82,7 @@ class Profile : Fragment() {
             phonenumber.setText("")
             val user = FirebaseAuth.getInstance()
             user.signOut()
-            val intent = Intent(activity, LoginSignup::class.java)
+            val intent = Intent(activity, LoginSignupActivity::class.java)
             startActivity(intent)
 
         }

@@ -11,14 +11,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.activity.OnBackPressedCallback
 import androidx.cardview.widget.CardView
 import androidx.navigation.Navigation
 import com.example.myapp.R
-import com.example.myapp.Activity.UserPosted
+import com.example.myapp.Activity.UserPostedActivity
 
-class DeashBoard : Fragment() {
+class DeashBoardFragment : Fragment() {
 
 
     @SuppressLint("MissingInflatedId")
@@ -33,6 +34,13 @@ class DeashBoard : Fragment() {
         val addRecipe = view.findViewById<CardView>(R.id.addRecipe)
         val useruploaded = view.findViewById<CardView>(R.id.userposted)
         val trending = view.findViewById<CardView>(R.id.MostViewd)
+        val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.dialog)
+        search.startAnimation(animation)
+        recipe.startAnimation(animation)
+        profile.startAnimation(animation)
+        addRecipe.startAnimation(animation)
+        useruploaded.startAnimation(animation)
+        trending.startAnimation(animation)
         profile.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_profile2)
         }
@@ -40,7 +48,7 @@ class DeashBoard : Fragment() {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_searchFragment22)
         }
         useruploaded.setOnClickListener {
-            startActivity(Intent(requireContext(), UserPosted::class.java))
+            startActivity(Intent(requireContext(), UserPostedActivity::class.java))
         }
         recipe.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_deashBoard_to_recipeFragment)

@@ -22,27 +22,27 @@
             android:name=".Activity.Navigation"
             android:exported="false" />
         <activity
-            android:name=".Activity.UserPostedRecipe"
+            android:name=".Activity.UserPostedRecipeShowActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.UserPosted"
+            android:name=".Activity.UserPostedActivity"
             android:exported="false"
             android:label="@string/title_activity_user_posted"
             android:theme="@style/Theme.MyApp.NoActionBar" />
         <activity
-            android:name=".Activity.FilterRecipeShow"
+            android:name=".Activity.FilterRecipeShowActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.Introduction"
+            android:name=".Activity.IntroductionActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.RecipeBasedOnIngridients"
+            android:name=".Activity.RecipeBasedOnIngridientsActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.Splash"
+            android:name=".Activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -56,10 +56,10 @@
             android:value="@string/app_name" />
 
         <activity
-            android:name=".Activity.Home"
+            android:name=".Activity.HomeActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.LoginSignup"
+            android:name=".Activity.LoginSignupActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

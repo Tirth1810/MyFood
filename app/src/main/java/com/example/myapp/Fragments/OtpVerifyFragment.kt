@@ -17,7 +17,7 @@ import com.google.firebase.auth.*
 import java.util.concurrent.TimeUnit
 
 
-class OtpVerify : Fragment() {
+class OtpVerifyFragment : Fragment() {
     val auth = FirebaseAuth.getInstance()
     lateinit var number: String
     lateinit var progress: ProgressBar

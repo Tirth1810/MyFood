@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.DeashBoard">
+    tools:context=".Fragments.DeashBoardFragment">
 
 
     <androidx.appcompat.widget.Toolbar

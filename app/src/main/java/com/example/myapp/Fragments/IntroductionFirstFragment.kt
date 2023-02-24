@@ -8,13 +8,11 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import com.example.myapp.R
-import kotlinx.android.synthetic.main.activity_introduction.*
 
 
-class First : Fragment() {
+class IntroductionFirstFragment : Fragment() {
 
     private lateinit var intro_next: TextView
     override fun onCreateView(

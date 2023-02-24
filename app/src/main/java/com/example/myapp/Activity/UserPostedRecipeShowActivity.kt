@@ -9,14 +9,14 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapp.R
 import com.google.firebase.database.*
-import kotlinx.android.synthetic.main.activity_user_posted_recipe.*
+import kotlinx.android.synthetic.main.activity_user_posted_recipe_show.*
 
 
-class UserPostedRecipe : AppCompatActivity() {
+class UserPostedRecipeShowActivity : AppCompatActivity() {
     private lateinit var database: DatabaseReference
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_user_posted_recipe)
+        setContentView(R.layout.activity_user_posted_recipe_show)
         val data = intent.getStringExtra("Name")
         Toast.makeText(this, data, Toast.LENGTH_SHORT).show()
         window.statusBarColor = Color.BLACK

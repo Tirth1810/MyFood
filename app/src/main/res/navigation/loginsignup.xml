@@ -31,7 +31,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpVerify2"
-        android:name="com.example.myapp.Fragments.OtpVerify"
+        android:name="com.example.myapp.Fragments.OtpVerifyFragment"
         android:label="fragment_otp_verify"
         tools:layout="@layout/fragment_otp_verify" >
         <action
@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/otpAuth2"
-        android:name="com.example.myapp.Fragments.OtpAuth"
+        android:name="com.example.myapp.Fragments.OtpAuthFragment"
         android:label="fragment_otp_auth"
         tools:layout="@layout/fragment_otp_auth" />
 </navigation>

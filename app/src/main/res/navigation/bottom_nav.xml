@@ -17,7 +17,7 @@
         tools:layout="@layout/fragment_recipe" />
     <fragment
         android:id="@+id/profile3"
-        android:name="com.example.myapp.Fragments.Profile"
+        android:name="com.example.myapp.Fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment

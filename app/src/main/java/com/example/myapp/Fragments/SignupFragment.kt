@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
@@ -40,6 +41,8 @@ class SignupFragment : Fragment() {
         val name = view.findViewById<TextInputEditText>(R.id.signup_name)
         val number = view.findViewById<TextInputEditText>(R.id.signuup_number)
         loginText = view.findViewById(R.id.login_text)
+        val animation=AnimationUtils.loadAnimation(requireContext(),R.anim.dialog)
+
         loginText.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_signupFragment_to_loginFragment)
         }

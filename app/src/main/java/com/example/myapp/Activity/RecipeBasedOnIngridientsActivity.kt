@@ -17,7 +17,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_recipe_based_on_ingridients.*
 
-class RecipeBasedOnIngridients : AppCompatActivity(),
+class RecipeBasedOnIngridientsActivity : AppCompatActivity(),
     IngredientsBaseRecipeAdapter.RecipeBasedOnIng {
     private val ingredientsBasedRecipeList = ArrayList<IngredientsBasedDataClass>()
 
@@ -49,7 +49,7 @@ class RecipeBasedOnIngridients : AppCompatActivity(),
                                             recipe_BasedOn_Ingredients.adapter =
                                                 IngredientsBaseRecipeAdapter(
                                                     ingredientsBasedRecipeList,
-                                                    this@RecipeBasedOnIngridients
+                                                    this@RecipeBasedOnIngridientsActivity
                                                 )
                                         }
                                     }
@@ -71,7 +71,7 @@ class RecipeBasedOnIngridients : AppCompatActivity(),
     override fun OnRecipeClick(position: Int) {
         val selecteditem = ingredientsBasedRecipeList[position]
         val Name = selecteditem.Name.toString().trim()
-        intent = Intent(this, FilterRecipeShow::class.java)
+        intent = Intent(this, FilterRecipeShowActivity::class.java)
         intent.putExtra("RecipesName", Name)
         startActivity(intent)
     }

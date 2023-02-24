@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/deashBoard"
-        android:name="com.example.myapp.Fragments.DeashBoard"
+        android:name="com.example.myapp.Fragments.DeashBoardFragment"
         android:label="fragment_deash_board"
         tools:layout="@layout/fragment_deash_board" >
         <action
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/profile2"
-        android:name="com.example.myapp.Fragments.Profile"
+        android:name="com.example.myapp.Fragments.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" >
         <action

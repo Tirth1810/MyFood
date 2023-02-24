@@ -9,7 +9,7 @@ import com.example.myapp.R
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_introduction.*
 
-class Introduction : AppCompatActivity() {
+class IntroductionActivity : AppCompatActivity() {
     @SuppressLint("SuspiciousIndentation")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -17,7 +17,7 @@ class Introduction : AppCompatActivity() {
         window.statusBarColor= Color.BLACK
         val user = FirebaseAuth.getInstance()
         if (user.currentUser != null) {
-            val intent = Intent(this, LoginSignup::class.java)
+            val intent = Intent(this, LoginSignupActivity::class.java)
             startActivity(intent)
         }
     }

@@ -23,7 +23,7 @@ import com.example.myapp.Adapters.Recyclerview_Adapter
 import com.example.myapp.DataClass.Data
 import com.example.myapp.DataClass.Itemas
 
-import com.example.myapp.Activity.Home
+import com.example.myapp.Activity.HomeActivity
 import com.example.myapp.R
 import com.google.firebase.database.*
 import kotlinx.android.synthetic.main.fragment_deash_board.*
@@ -182,7 +182,7 @@ class RecipeFragment : Fragment(), ItemAdapter.OnItemClickListener,
     override fun OnItemClick(position: Int) {
         val clickedItems = filterList[position]
         val NAME = clickedItems.Name.toString().trim()
-        val intent = Intent(requireContext(), Home::class.java)
+        val intent = Intent(requireContext(), HomeActivity::class.java)
 
         intent.putExtra("Name", NAME)
         startActivity(intent)

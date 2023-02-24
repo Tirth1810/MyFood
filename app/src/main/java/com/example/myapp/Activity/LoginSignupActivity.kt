@@ -7,7 +7,7 @@ import android.os.Bundle
 import com.example.myapp.R
 import com.google.firebase.auth.FirebaseAuth
 
-class LoginSignup : AppCompatActivity() {
+class LoginSignupActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

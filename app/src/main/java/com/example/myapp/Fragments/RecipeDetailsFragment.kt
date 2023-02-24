@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.myapp.R
@@ -15,9 +14,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputEditText
 
 
-class RecipeDetalsFragment : Fragment() {
+class RecipeDetailsFragment : Fragment() {
 
-    private val args: RecipeDetalsFragmentArgs by navArgs()
+    private val args: RecipeDetailsFragmentArgs by navArgs()
 
     @SuppressLint("MissingInflatedId")
     override fun onCreateView(
@@ -53,7 +52,7 @@ class RecipeDetalsFragment : Fragment() {
             } else {
                 val personalName = args.name
                 val directions =
-                    RecipeDetalsFragmentDirections.actionRecipeDetalsFragmentToRecipeImageFragment(
+                    RecipeDetailsFragmentDirections.actionRecipeDetalsFragmentToRecipeImageFragment(
                         name.text.toString().trim(),
                         ingredients.text.toString().trim(),
                         description.text.toString().trim(),

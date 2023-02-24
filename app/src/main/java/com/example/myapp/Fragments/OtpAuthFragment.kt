@@ -17,7 +17,7 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 
-class OtpAuth : Fragment() {
+class OtpAuthFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private lateinit var verifyBtn: Button
     private lateinit var resendTV: TextView
