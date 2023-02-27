@@ -33,7 +33,7 @@ class DeashBoardFragment : Fragment() {
         val profile = view.findViewById<CardView>(R.id.profile)
         val addRecipe = view.findViewById<CardView>(R.id.addRecipe)
         val useruploaded = view.findViewById<CardView>(R.id.userposted)
-        val trending = view.findViewById<CardView>(R.id.MostViewd)
+        val trending = view.findViewById<CardView>(R.id.BuyBook)
         val animation = AnimationUtils.loadAnimation(requireContext(), R.anim.dialog)
         search.startAnimation(animation)
         recipe.startAnimation(animation)

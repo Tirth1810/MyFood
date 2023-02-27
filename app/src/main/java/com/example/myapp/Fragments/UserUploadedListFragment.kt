@@ -74,7 +74,9 @@ class UserUploadedListFragment : Fragment(), UserUploaded.OnUserUploadedClick {
 
             override fun afterTextChanged(s: Editable?) {
                 if (s.toString().isEmpty()) {
-                    recyclerview.adapter = UserUploaded(Recipes, this@UserUploadedListFragment)
+                    filter.clear()
+                    filter.addAll(Recipes)
+                    recyclerview.adapter = UserUploaded(filter, this@UserUploadedListFragment)
                 } else {
                     Filter(s.toString(), Recipes)
                 }

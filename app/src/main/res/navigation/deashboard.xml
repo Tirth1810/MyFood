@@ -91,9 +91,9 @@
         tools:layout="@layout/fragment_login" />
     <fragment
         android:id="@+id/trendingFragment"
-        android:name="com.example.myapp.Fragments.TrendingFragment"
+        android:name="com.example.myapp.Fragments.BuyBookFragment"
         android:label="fragment_trending"
-        tools:layout="@layout/fragment_trending" >
+        tools:layout="@layout/fragment_buybook" >
         <action
             android:id="@+id/action_trendingFragment_to_deashBoard"
             app:destination="@id/deashBoard" />
