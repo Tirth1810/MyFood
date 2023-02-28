@@ -28,14 +28,12 @@ class CartFragment : Fragment(), CartAdapter.Total {
     val quantity = ArrayList<CartDataClass>()
     var total = 0
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_cart, container, false)
         binding = FragmentCartBinding.bind(view)
         val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-            "Text",
-            Context.MODE_PRIVATE
+            "Text", Context.MODE_PRIVATE
         )
         val email = sharedPreferences.getString("Email", "").toString()
         val rootRef = FirebaseDatabase.getInstance().reference
@@ -118,8 +116,7 @@ class CartFragment : Fragment(), CartAdapter.Total {
         dref.child(removetext).removeValue().addOnSuccessListener {
             Toast.makeText(requireContext(), "Done", Toast.LENGTH_SHORT).show()
             val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
-                "Text",
-                Context.MODE_PRIVATE
+                "Text", Context.MODE_PRIVATE
             )
             val email = sharedPreferences.getString("Email", "").toString()
             val rootRef = FirebaseDatabase.getInstance().reference
@@ -141,12 +138,9 @@ class CartFragment : Fragment(), CartAdapter.Total {
                     if (name == null) {
                         binding.cartTotal.visibility = View.GONE
                     } else {
-                        binding.cartRv.layoutManager =
-                            LinearLayoutManager(
-                                requireContext(),
-                                LinearLayoutManager.VERTICAL,
-                                false
-                            )
+                        binding.cartRv.layoutManager = LinearLayoutManager(
+                            requireContext(), LinearLayoutManager.VERTICAL, false
+                        )
                         binding.cartRv.adapter =
                             CartAdapter(name, price, quantity, this@CartFragment)
                     }
