@@ -100,11 +100,40 @@
         <action
             android:id="@+id/action_trendingFragment_to_deashBoard3"
             app:destination="@id/deashBoard" />
+        <action
+            android:id="@+id/action_trendingFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+        <action
+            android:id="@+id/action_trendingFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/personalDetailsFragment2"
         android:name="com.example.myapp.Fragments.PersonalDetailsFragment"
         android:label="fragment_personal_details"
         tools:layout="@layout/fragment_personal_details" />
+    <fragment
+        android:id="@+id/bookDetailsFragment"
+        android:name="com.example.myapp.Fragments.BookDetailsFragment"
+        android:label="BookDetailsFragment" >
+        <argument
+            android:name="Name"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_bookDetailsFragment_to_trendingFragment"
+            app:destination="@id/trendingFragment" />
+        <action
+            android:id="@+id/action_bookDetailsFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.example.myapp.Fragments.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_bookDetailsFragment"
+            app:destination="@id/bookDetailsFragment" />
+    </fragment>
 
 </navigation>

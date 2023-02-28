@@ -70,4 +70,5 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:20.4.1'
     implementation 'com.facebook.android:facebook-login:latest.release'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+    implementation 'com.ms-square:expandableTextView:0.1.4'
 }

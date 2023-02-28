@@ -11,16 +11,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapp.Adapters.BuyBookAdapter
-import com.example.myapp.Adapters.ItemAdapter
 import com.example.myapp.DataClass.BuyBook
-import com.example.myapp.DataClass.Itemas
-import com.example.myapp.DataClass.TrendingDataClass
 import com.example.myapp.R
 import com.google.firebase.database.*
 
@@ -35,7 +32,11 @@ class BuyBookFragment : Fragment(), BuyBookAdapter.OnBuyClick {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_buybook, container, false)
-        val back = view.findViewById<ImageView>(R.id.trending_back)
+        val back = view.findViewById<CardView>(R.id.bybook_back)
+        val cart = view.findViewById<CardView>(R.id.bybook_cart)
+        cart.setOnClickListener {
+            findNavController().navigate(R.id.action_trendingFragment_to_cartFragment)
+        }
         back.setOnClickListener {
             findNavController().navigate(R.id.action_trendingFragment_to_deashBoard)
         }
@@ -76,7 +77,7 @@ class BuyBookFragment : Fragment(), BuyBookAdapter.OnBuyClick {
                 if (s.toString().isEmpty()) {
                     filter.clear()
                     filter.addAll(Buy)
-                    buyBookRv?.adapter = BuyBookAdapter(Buy, this@BuyBookFragment)
+                    buyBookRv?.adapter = BuyBookAdapter(filter, this@BuyBookFragment)
                 } else {
                     Filter(s.toString(), Buy)
                 }
@@ -104,7 +105,11 @@ class BuyBookFragment : Fragment(), BuyBookAdapter.OnBuyClick {
 
     override fun OnBookBuy(pos: Int) {
         val bookName = filter[pos]
-        Toast.makeText(requireContext(), bookName.BookName.toString(), Toast.LENGTH_SHORT).show()
+        val name = bookName.BookName.toString().trim()
+        val direction = BuyBookFragmentDirections.actionTrendingFragmentToBookDetailsFragment(
+            name
+        )
+        findNavController().navigate(direction)
     }
 
 
