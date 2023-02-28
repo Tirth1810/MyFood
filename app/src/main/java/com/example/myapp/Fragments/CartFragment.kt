@@ -3,10 +3,13 @@ package com.example.myapp.Fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapp.Adapters.CartAdapter
 import com.example.myapp.DataClass.CartDataClass
@@ -16,6 +19,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 
 class CartFragment : Fragment(), CartAdapter.Total {
     private lateinit var binding: FragmentCartBinding
@@ -47,9 +51,13 @@ class CartFragment : Fragment(), CartAdapter.Total {
                         quantity.add(CartDataClass(quantity = ds.child("quantity").value.toString()))
                     }
                 }
-                binding.cartRv.layoutManager =
-                    LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                binding.cartRv.adapter = CartAdapter(name, price, quantity, this@CartFragment)
+                if (name == null) {
+                    binding.cartTotal.visibility = View.GONE
+                } else {
+                    binding.cartRv.layoutManager =
+                        LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    binding.cartRv.adapter = CartAdapter(name, price, quantity, this@CartFragment)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -58,7 +66,45 @@ class CartFragment : Fragment(), CartAdapter.Total {
 
         }
         userRef.addListenerForSingleValueEvent(eventListener)
+        binding.placeOrder.setOnClickListener {
+
+        }
+        binding.placeOrder.setOnClickListener {
+            val dwlwtweventListener: ValueEventListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ds in snapshot.children) {
+                        val userEmail = ds.child("email").getValue(String::class.java)
+                        if (userEmail!!.contains(email)) {
+                            val dref = FirebaseDatabase.getInstance().getReference("Cart")
+                            dref.child(
+                                ds.child("name").getValue().toString()
+                            ).removeValue().addOnSuccessListener {
+                                Toast.makeText(requireContext(), "Order Placed", Toast.LENGTH_SHORT)
+                                    .show()
+                                findNavController().navigate(R.id.action_cartFragment_to_buybookfragment)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+            userRef.addListenerForSingleValueEvent(dwlwtweventListener)
+
+            FirebaseMessaging.getInstance().token.addOnCompleteListener {
+                if (!it.isSuccessful) {
+
+                }
+                val token: String = it.result
+                Log.d("Token", token)
+
+            }
+        }
         return binding.root
+
     }
 
     override fun TotalPrice(total: Int) {

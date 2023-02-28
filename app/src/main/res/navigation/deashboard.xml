@@ -134,6 +134,9 @@
         <action
             android:id="@+id/action_cartFragment_to_bookDetailsFragment"
             app:destination="@id/bookDetailsFragment" />
+        <action
+            android:id="@+id/action_cartFragment_to_buybookfragment"
+            app:destination="@id/trendingFragment" />
     </fragment>
 
 </navigation>
