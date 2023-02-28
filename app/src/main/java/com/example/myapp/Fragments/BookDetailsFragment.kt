@@ -71,9 +71,8 @@ class BookDetailsFragment : Fragment() {
                 val Name = binding.bookDetailsBookName.text.toString().trim()
                 val Price = binding.bookDetailsPrice.text.toString().trim()
                 val Quantity = binding.counterText.text.toString().trim()
-                val total = Price.toInt() * Quantity.toInt()
                 val cart = CartDataClass(
-                    email, Name, Quantity.toString(), total.toString()
+                    email, Name, Quantity.toString(), Price.toString()
                 )
                 val userid = dref.key!!
                 dref.child(Name).setValue(cart).addOnCompleteListener {
