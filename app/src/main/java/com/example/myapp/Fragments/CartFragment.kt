@@ -111,4 +111,55 @@ class CartFragment : Fragment(), CartAdapter.Total {
         binding.cartTotal.text = total.toString()
     }
 
+    override fun removeclick(postion: Int) {
+        val removetext = name[postion].Name.toString()
+
+        val dref = FirebaseDatabase.getInstance().getReference("Cart")
+        dref.child(removetext).removeValue().addOnSuccessListener {
+            Toast.makeText(requireContext(), "Done", Toast.LENGTH_SHORT).show()
+            val sharedPreferences: SharedPreferences = requireContext().getSharedPreferences(
+                "Text",
+                Context.MODE_PRIVATE
+            )
+            val email = sharedPreferences.getString("Email", "").toString()
+            val rootRef = FirebaseDatabase.getInstance().reference
+            val userRef = rootRef.child("Cart")
+            val eventListener: ValueEventListener = object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    name.clear()
+                    price.clear()
+                    quantity.clear()
+                    for (ds in snapshot.children) {
+                        val userEmail = ds.child("email").getValue(String::class.java)
+                        if (userEmail!!.contains(email)) {
+                            val namevalue = ds.child("name").value.toString()
+                            name.add(CartDataClass(Name = namevalue))
+                            price.add(CartDataClass(Price = ds.child("price").value.toString()))
+                            quantity.add(CartDataClass(quantity = ds.child("quantity").value.toString()))
+                        }
+                    }
+                    if (name == null) {
+                        binding.cartTotal.visibility = View.GONE
+                    } else {
+                        binding.cartRv.layoutManager =
+                            LinearLayoutManager(
+                                requireContext(),
+                                LinearLayoutManager.VERTICAL,
+                                false
+                            )
+                        binding.cartRv.adapter =
+                            CartAdapter(name, price, quantity, this@CartFragment)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+            userRef.addListenerForSingleValueEvent(eventListener)
+
+        }
+
+    }
 }

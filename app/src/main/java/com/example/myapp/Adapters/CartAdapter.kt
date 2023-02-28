@@ -46,12 +46,7 @@ class CartAdapter(
         holder.price.text = Price[position].Price.toString()
         holder.qua.text = Quantity[position].quantity.toString()
         holder.remove.setOnClickListener {
-            val removeText = Name[position].Name.toString()
-            val dref = FirebaseDatabase.getInstance().getReference("Cart")
-            dref.child(removeText).removeValue().addOnSuccessListener {
-                Toast.makeText(aContext, "Done", Toast.LENGTH_SHORT).show()
-            }
-
+            listener.removeclick(position)
         }
         var totalPrice = 0
         for (i in 0 until Price.size) {
@@ -63,6 +58,7 @@ class CartAdapter(
 
     interface Total {
         fun TotalPrice(total: Int)
+        fun removeclick(postion:Int)
     }
 
 }
